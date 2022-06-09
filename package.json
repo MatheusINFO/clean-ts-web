@@ -10,7 +10,6 @@
     "test:staged": "npm test -- --findRelatedTests",
     "test:ci": "npm test -- --coverage"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
@@ -36,9 +35,8 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^25.5.4",
     "lint-staged": "^10.2.2",
-    "node-sass": "^7.0.1",
-    "sass-loader": "^13.0.0",
-    "style-loader": "^3.3.1",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^1.2.1",
     "ts-jest": "^25.5.0",
     "ts-loader": "^7.0.4",
     "typescript": "^3.8.3",
@@ -47,7 +45,8 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
-    "axios": "^0.27.2",
+    "axios": "^0.19.2",
+    "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   }
