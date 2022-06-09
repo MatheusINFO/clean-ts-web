@@ -7,7 +7,10 @@
     "moduleResolution": "node",
     "jsx": "react",
     "rootDir": "src",
-    "baseUrl": "url",
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["*"]
+    },
     "allowJs": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
