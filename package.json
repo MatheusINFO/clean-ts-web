@@ -1,7 +1,7 @@
 {
   "name": "clean-ts-web",
   "version": "1.0.0",
-  "description": "",
+  "description": "Curso de React do Rodrigo Manguinho",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --open",
