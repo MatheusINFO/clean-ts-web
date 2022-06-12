@@ -50,6 +50,7 @@ describe('LoginComponent', () => {
     const emailInput = sut.getByTestId('email')
     fireEvent.input(emailInput, { target: { value: faker.internet.email() } })
     const emailStatus = sut.getByTestId('email-status')
+
     expect(emailStatus.title).toBe(validationStub.errorMessage)
     expect(emailStatus.textContent).toBe('🙁')
   })
@@ -61,6 +62,7 @@ describe('LoginComponent', () => {
       target: { value: faker.internet.password() },
     })
     const passwordStatus = sut.getByTestId('password-status')
+
     expect(passwordStatus.title).toBe(validationStub.errorMessage)
     expect(passwordStatus.textContent).toBe('🙁')
   })
@@ -73,6 +75,7 @@ describe('LoginComponent', () => {
       target: { value: faker.internet.email() },
     })
     const emailStatus = sut.getByTestId('email-status')
+
     expect(emailStatus.title).toBe('Tudo certo!')
     expect(emailStatus.textContent).toBe('🙂')
   })
@@ -85,7 +88,24 @@ describe('LoginComponent', () => {
       target: { value: faker.internet.password() },
     })
     const passwordStatus = sut.getByTestId('password-status')
+
     expect(passwordStatus.title).toBe('Tudo certo!')
     expect(passwordStatus.textContent).toBe('🙂')
+  })
+
+  it('Should enable submit button if form is valid', () => {
+    const { sut, validationStub } = makeSut()
+    validationStub.errorMessage = null
+    const button = sut.getByTestId('submit') as HTMLButtonElement
+    const passwordInput = sut.getByTestId('password')
+    const emailInput = sut.getByTestId('email')
+    fireEvent.input(passwordInput, {
+      target: { value: faker.internet.password() },
+    })
+    fireEvent.input(emailInput, {
+      target: { value: faker.internet.email() },
+    })
+
+    expect(button.disabled).toBeFalsy()
   })
 })
