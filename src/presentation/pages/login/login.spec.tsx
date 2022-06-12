@@ -14,9 +14,11 @@ const makeSut = (): SutTypes => {
 }
 
 describe('LoginComponent', () => {
-  it('Should not render spinner and error on start', () => {
+  it('Should start with initial state', () => {
     const { sut } = makeSut()
     const errorWrap = sut.getByTestId('error-wrap')
+    const button = sut.getByTestId('submit') as HTMLButtonElement
     expect(errorWrap.childElementCount).toBe(0)
+    expect(button.disabled).toBeTruthy()
   })
 })
