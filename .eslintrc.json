@@ -18,6 +18,9 @@
     "comma-dangle": "off",
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
-    "space-before-function-paren": ["error", "none"]
+    "space-before-function-paren": [0, "never"],
+    "@typescript-eslint/require-await": "off",
+    "react/prop-types": "off",
+    "@typescript-eslint/indent": "off" 
   }
 }
