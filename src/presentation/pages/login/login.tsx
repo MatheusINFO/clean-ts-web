@@ -8,22 +8,21 @@ import {
 } from '@/presentation/components'
 import Context from '@/presentation/contexts/form/form-context'
 
-type StateProps = {
-  isLoading: boolean
-  errorMessage: string
-}
-
 const Login: React.FC = () => {
-  const [state] = useState<StateProps>({
+  const [state] = useState({
     isLoading: false,
-    errorMessage: '',
+  })
+  const [errorState] = useState({
+    main: '',
+    email: 'Campo obrigatório',
+    password: 'Campo obrigatório',
   })
 
   return (
     <div className={Styles.login}>
       <UnsignedHeader />
 
-      <Context.Provider value={state}>
+      <Context.Provider value={{ state, errorState }}>
         <form className={Styles.form}>
           <h2>Login</h2>
           <Input type="email" name="email" placeholder="Digite seu e-mail" />
@@ -32,7 +31,6 @@ const Login: React.FC = () => {
             name="password"
             placeholder="Digite sua senha"
           />
-
           <button
             data-testid="submit"
             className={Styles.submit}
@@ -40,9 +38,7 @@ const Login: React.FC = () => {
             disabled>
             Entrar
           </button>
-
           <span className={Styles.link}>Criar conta</span>
-
           <FormStatus />
         </form>
       </Context.Provider>

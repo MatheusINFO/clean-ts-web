@@ -18,7 +18,14 @@ describe('LoginComponent', () => {
     const { sut } = makeSut()
     const errorWrap = sut.getByTestId('error-wrap')
     const button = sut.getByTestId('submit') as HTMLButtonElement
+    const emailStatus = sut.getByTestId('email-status')
+    const passwordStatus = sut.getByTestId('password-status')
+
     expect(errorWrap.childElementCount).toBe(0)
     expect(button.disabled).toBeTruthy()
+    expect(emailStatus.title).toBe('Campo obrigatório')
+    expect(emailStatus.textContent).toBe('🙁')
+    expect(passwordStatus.title).toBe('Campo obrigatório')
+    expect(passwordStatus.textContent).toBe('🙁')
   })
 })
