@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link, useHistory } from 'react-router-dom'
 import Styles from './login-styles.scss'
 import {
   Input,
@@ -16,6 +17,7 @@ type Props = {
 }
 
 const Login: React.FC<Props> = ({ validation, authentication }) => {
+  const history = useHistory()
   const [state, setState] = useState({
     isLoading: false,
     email: '',
@@ -54,6 +56,8 @@ const Login: React.FC<Props> = ({ validation, authentication }) => {
       })
 
       localStorage.setItem('accessToken', account.accesstoken)
+
+      history.replace('/')
     } catch (error) {
       setState({
         ...state,
@@ -86,7 +90,9 @@ const Login: React.FC<Props> = ({ validation, authentication }) => {
             disabled={!!state.emailError || !!state.passwordError}>
             Entrar
           </button>
-          <span className={Styles.link}>Criar conta</span>
+          <Link data-testid="signup" to="/signup" className={Styles.link}>
+            Criar conta
+          </Link>
           <FormStatus />
         </form>
       </Context.Provider>
