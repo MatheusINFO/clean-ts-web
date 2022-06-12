@@ -1,3 +1,4 @@
+import 'jest-localstorage-mock'
 import React from 'react'
 import faker from 'faker'
 import {
@@ -5,9 +6,11 @@ import {
   RenderResult,
   fireEvent,
   cleanup,
+  waitFor,
 } from '@testing-library/react'
 import Login from './login'
 import { ValidationStub, AuthenticationSpy } from '@/presentation/test'
+import { InvalidCredentialsError } from '@/domain/erros'
 
 type SutTypes = {
   sut: RenderResult
@@ -68,6 +71,10 @@ const simulateValidSubmit = (
 }
 
 describe('LoginComponent', () => {
+  beforeEach(() => {
+    localStorage.clear()
+  })
+
   afterEach(cleanup)
 
   it('Should start with initial state', () => {
@@ -159,5 +166,30 @@ describe('LoginComponent', () => {
     fireEvent.submit(sut.getByTestId('form'))
 
     expect(authenticationSpy.callsCount).toBe(0)
+  })
+
+  it('Should present error if Authentication fails', async () => {
+    const { sut, authenticationSpy } = makeSut()
+    const error = new InvalidCredentialsError()
+    jest
+      .spyOn(authenticationSpy, 'auth')
+      .mockReturnValueOnce(Promise.reject(error))
+
+    await waitFor(() => simulateValidSubmit(sut))
+
+    const mainError = sut.getByTestId('main-error')
+    const errorWrap = sut.getByTestId('error-wrap')
+
+    expect(mainError.textContent).toBe(error.message)
+    expect(errorWrap.childElementCount).toBe(1)
+  })
+
+  it('Should add accessToken to localstorage on success', async () => {
+    const { sut, authenticationSpy } = makeSut()
+    await waitFor(() => simulateValidSubmit(sut))
+    expect(localStorage.setItem).toHaveBeenCalledWith(
+      'accessToken',
+      authenticationSpy.account.accesstoken
+    )
   })
 })
