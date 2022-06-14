@@ -1,5 +1,5 @@
 import faker from 'faker'
-import { InvalidFielError } from '@/validation/errors'
+import { InvalidFieldError } from '@/validation/errors'
 import { EmailValidation } from './email-validation'
 
 let field: string = faker.database.column()
@@ -24,7 +24,7 @@ describe('EmailValidation', () => {
   it('Should return error if email is invalid', () => {
     const { sut } = makeSut()
     const error = sut.validate(faker.random.word())
-    expect(error).toEqual(new InvalidFielError(field))
+    expect(error).toEqual(new InvalidFieldError(field))
   })
 
   it('Should return falsy if email is valid', () => {

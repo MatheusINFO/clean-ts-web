@@ -1,4 +1,4 @@
-import { InvalidFielError } from '@/validation/errors'
+import { InvalidFieldError } from '@/validation/errors'
 import { FieldValidation } from '@/validation/protocols'
 
 export class EmailValidation implements FieldValidation {
@@ -10,6 +10,6 @@ export class EmailValidation implements FieldValidation {
 
     return !value || emailRegex.test(value)
       ? null
-      : new InvalidFielError(this.field)
+      : new InvalidFieldError(this.field)
   }
 }

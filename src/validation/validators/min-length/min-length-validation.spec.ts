@@ -1,5 +1,5 @@
 import faker from 'faker'
-import { InvalidFielError } from '@/validation/errors'
+import { InvalidFieldError } from '@/validation/errors'
 import { MinLengthValidation } from './min-length-validation'
 
 let field: string = faker.database.column()
@@ -24,7 +24,7 @@ describe('MinLengthValidation', () => {
   it('Should return error if value is invalid', () => {
     const { sut } = makeSut(5)
     const error = sut.validate(faker.random.alphaNumeric(4))
-    expect(error).toEqual(new InvalidFielError(field))
+    expect(error).toEqual(new InvalidFieldError(field))
   })
 
   it('Should return falsy if value is valid', () => {
