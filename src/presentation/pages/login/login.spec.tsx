@@ -18,6 +18,8 @@ import {
   testChildCount,
   testStatusForField,
   populateInputField,
+  testElementExists,
+  testElementText,
 } from '@/presentation/test'
 import { InvalidCredentialsError } from '@/domain/erros'
 
@@ -52,20 +54,6 @@ const makeSut = (params?: SutParams): SutTypes => {
     authenticationSpy,
     saveAccessTokenMock,
   }
-}
-
-const testElementText = (
-  sut: RenderResult,
-  fieldName: string,
-  text: string
-): void => {
-  const element = sut.getByTestId(fieldName)
-  expect(element.textContent).toBe(text)
-}
-
-const testElementExists = (sut: RenderResult, fieldName: string): void => {
-  const element = sut.getByTestId(fieldName)
-  expect(element).toBeTruthy()
 }
 
 const simulateValidSubmit = (

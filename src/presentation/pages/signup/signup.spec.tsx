@@ -2,12 +2,18 @@ import React from 'react'
 import faker from 'faker'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
-import { cleanup, render, RenderResult } from '@testing-library/react'
+import {
+  cleanup,
+  fireEvent,
+  render,
+  RenderResult,
+} from '@testing-library/react'
 import SignUp from './signup'
 import {
   populateInputField,
   testButtonIsDisabled,
   testChildCount,
+  testElementExists,
   testStatusForField,
   ValidationStub,
 } from '@/presentation/test'
@@ -33,6 +39,21 @@ const makeSut = (params?: SutParams): SutTypes => {
   return {
     sut,
   }
+}
+
+const simulateValidSubmit = (
+  sut: RenderResult,
+  name = faker.name.findName(),
+  email = faker.internet.email(),
+  password = faker.internet.password()
+): void => {
+  const button = sut.getByTestId('submit') as HTMLButtonElement
+  populateInputField(sut, 'name', name)
+  populateInputField(sut, 'email', email)
+  populateInputField(sut, 'password', password)
+  populateInputField(sut, 'passwordConfirmation', password)
+
+  fireEvent.click(button)
 }
 
 describe('SignUpComponent', () => {
@@ -110,5 +131,20 @@ describe('SignUpComponent', () => {
     const { sut } = makeSut()
     populateInputField(sut, 'passwordConfirmation', faker.internet.password())
     testStatusForField(sut, 'passwordConfirmation')
+  })
+
+  it('Should enable submit button if form is valid', () => {
+    const { sut } = makeSut()
+    populateInputField(sut, 'name', faker.name.findName())
+    populateInputField(sut, 'email', faker.internet.email())
+    populateInputField(sut, 'password', faker.internet.password())
+    populateInputField(sut, 'passwordConfirmation', faker.internet.password())
+    testButtonIsDisabled(sut, 'submit', false)
+  })
+
+  it('Should show spinner on submit', () => {
+    const { sut } = makeSut()
+    simulateValidSubmit(sut)
+    testElementExists(sut, 'spinner')
   })
 })
