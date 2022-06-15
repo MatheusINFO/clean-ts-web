@@ -32,13 +32,13 @@ describe('ValidationComposite', () => {
     const errorMessage = faker.random.words()
     fieldValidationsSpy[0].error = new Error(errorMessage)
     fieldValidationsSpy[1].error = new Error(faker.random.words())
-    const error = sut.validate(field, faker.random.words())
+    const error = sut.validate(field, { [field]: faker.random.words() })
     expect(error).toBe(errorMessage)
   })
 
   it('Should return void on validations succeds', () => {
     const { sut } = makeSut()
-    const error = sut.validate(field, faker.random.words())
+    const error = sut.validate(field, { [field]: faker.random.words() })
     expect(error).toBeUndefined()
   })
 })

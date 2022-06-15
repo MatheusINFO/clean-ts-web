@@ -23,13 +23,21 @@ describe('MinLengthValidation', () => {
 
   it('Should return error if value is invalid', () => {
     const { sut } = makeSut(5)
-    const error = sut.validate(faker.random.alphaNumeric(4))
+    const error = sut.validate({ [field]: faker.random.alphaNumeric(4) })
     expect(error).toEqual(new InvalidFieldError(field))
   })
 
   it('Should return falsy if value is valid', () => {
     const { sut } = makeSut()
-    const error = sut.validate(faker.random.alphaNumeric(3))
+    const error = sut.validate({ [field]: faker.random.alphaNumeric(3) })
+    expect(error).toBeFalsy()
+  })
+
+  it('Should return falsy if value is empty', () => {
+    const { sut } = makeSut()
+    const error = sut.validate({
+      [faker.database.column()]: faker.random.alphaNumeric(3),
+    })
     expect(error).toBeFalsy()
   })
 })

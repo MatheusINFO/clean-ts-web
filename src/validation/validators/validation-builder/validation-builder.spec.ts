@@ -5,6 +5,7 @@ import {
   MinLengthValidation,
   RequiredFieldValidation,
 } from '@/validation/validators'
+import { CompareFieldsValidation } from '../compare-fields/compare-fields-validation'
 
 describe('ValidationBuilder', () => {
   it('Should return RequiredFieldValidation', () => {
@@ -24,6 +25,17 @@ describe('ValidationBuilder', () => {
     const field = faker.database.column()
     const validations = ValidationBuilder.field(field).min(length).build()
     expect(validations).toEqual([new MinLengthValidation(field, length)])
+  })
+
+  it('Should return CompareFieldsvalidation', () => {
+    const field = faker.database.column()
+    const fieldToCompare = faker.database.column()
+    const validations = ValidationBuilder.field(field)
+      .sameAs(fieldToCompare)
+      .build()
+    expect(validations).toEqual([
+      new CompareFieldsValidation(field, fieldToCompare),
+    ])
   })
 
   it('Should return a list of validations', () => {
