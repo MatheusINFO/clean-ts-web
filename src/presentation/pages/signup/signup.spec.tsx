@@ -10,6 +10,7 @@ import {
 } from '@testing-library/react'
 import SignUp from './signup'
 import {
+  AddAccountSpy,
   populateInputField,
   testButtonIsDisabled,
   testChildCount,
@@ -20,6 +21,7 @@ import {
 
 type SutTypes = {
   sut: RenderResult
+  addAccountSpy: AddAccountSpy
 }
 
 type SutParams = {
@@ -28,16 +30,18 @@ type SutParams = {
 
 const history = createMemoryHistory({ initialEntries: ['/signup'] }) as any
 const makeSut = (params?: SutParams): SutTypes => {
+  const addAccountSpy = new AddAccountSpy()
   const validationStub = new ValidationStub()
   validationStub.errorMessage = params?.validationError
   const sut = render(
     <Router history={history}>
-      <SignUp validation={validationStub} />
+      <SignUp validation={validationStub} addAccount={addAccountSpy} />
     </Router>
   )
 
   return {
     sut,
+    addAccountSpy,
   }
 }
 
@@ -146,5 +150,20 @@ describe('SignUpComponent', () => {
     const { sut } = makeSut()
     simulateValidSubmit(sut)
     testElementExists(sut, 'spinner')
+  })
+
+  it('Should call AddAccount with correct values', () => {
+    const { sut, addAccountSpy } = makeSut()
+    const name = faker.name.findName()
+    const email = faker.internet.email()
+    const password = faker.internet.password()
+    simulateValidSubmit(sut, name, email, password)
+
+    expect(addAccountSpy.params).toEqual({
+      name,
+      email,
+      password,
+      passwordConfirmation: password,
+    })
   })
 })
