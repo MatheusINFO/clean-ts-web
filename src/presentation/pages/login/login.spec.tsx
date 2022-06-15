@@ -14,6 +14,10 @@ import {
   ValidationStub,
   AuthenticationSpy,
   SaveAccessTokenMock,
+  testButtonIsDisabled,
+  testChildCount,
+  testStatusForField,
+  populateInputField,
 } from '@/presentation/test'
 import { InvalidCredentialsError } from '@/domain/erros'
 
@@ -50,15 +54,6 @@ const makeSut = (params?: SutParams): SutTypes => {
   }
 }
 
-const testButtonIsDisabled = (
-  sut: RenderResult,
-  fieldName: string,
-  isDisabled: boolean
-): void => {
-  const button = sut.getByTestId(fieldName) as HTMLButtonElement
-  expect(button.disabled).toBe(isDisabled)
-}
-
 const testElementText = (
   sut: RenderResult,
   fieldName: string,
@@ -71,38 +66,6 @@ const testElementText = (
 const testElementExists = (sut: RenderResult, fieldName: string): void => {
   const element = sut.getByTestId(fieldName)
   expect(element).toBeTruthy()
-}
-
-const testChildCount = (
-  sut: RenderResult,
-  fieldName: string,
-  quantity: number
-): void => {
-  const element = sut.getByTestId(fieldName)
-  expect(element.childElementCount).toBe(quantity)
-}
-
-const testStatusForField = (
-  sut: RenderResult,
-  fieldName: string,
-  validationError?: string
-): void => {
-  const fieldStatus = sut.getByTestId(`${fieldName}-status`)
-
-  expect(fieldStatus.title).toBe(validationError || 'Tudo certo!')
-  expect(fieldStatus.textContent).toBe(validationError ? '🙁' : '🙂')
-}
-
-const populateInputField = (
-  sut: RenderResult,
-  fieldName: string,
-  fieldValue: string
-): void => {
-  const input = sut.getByTestId(fieldName)
-
-  fireEvent.input(input, {
-    target: { value: fieldValue },
-  })
 }
 
 const simulateValidSubmit = (
