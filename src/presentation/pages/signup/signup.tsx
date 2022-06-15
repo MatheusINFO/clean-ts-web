@@ -117,7 +117,11 @@ const SignUp: React.FC<Props> = ({
             type="submit">
             Entrar
           </button>
-          <Link data-testid="login" to="/login" className={Styles.link}>
+          <Link
+            data-testid="login-link"
+            replace
+            to="/login"
+            className={Styles.link}>
             Voltar para Login
           </Link>
           <FormStatus />

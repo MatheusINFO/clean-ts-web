@@ -95,7 +95,11 @@ const Login: React.FC<Props> = ({
             disabled={!!state.emailError || !!state.passwordError}>
             Entrar
           </button>
-          <Link data-testid="signup" to="/signup" className={Styles.link}>
+          <Link
+            data-testid="signup-link"
+            replace
+            to="/signup"
+            className={Styles.link}>
             Criar conta
           </Link>
           <FormStatus />

@@ -231,9 +231,9 @@ describe('SignUpComponent', () => {
 
   it('Should go to login page', async () => {
     const { sut } = makeSut()
-    const login = sut.getByTestId('login')
-    fireEvent.click(login)
-    expect(history.length).toBe(2)
+    const loginLink = sut.getByTestId('login-link')
+    fireEvent.click(loginLink)
+    expect(history.length).toBe(1)
     expect(history.location.pathname).toBe('/login')
   })
 })
