@@ -12,6 +12,7 @@ import {
 import {
   AddAccountSpy,
   populateInputField,
+  SaveAccessTokenMock,
   testButtonIsDisabled,
   testChildCount,
   testElementExists,
@@ -19,12 +20,13 @@ import {
   testStatusForField,
   ValidationStub,
 } from '@/presentation/test'
-import { InvalidCredentialsError } from '@/domain/erros'
+import { EmailInUseError } from '@/domain/erros'
 import SignUp from './signup'
 
 type SutTypes = {
   sut: RenderResult
   addAccountSpy: AddAccountSpy
+  saveAccessTokenMock: SaveAccessTokenMock
 }
 
 type SutParams = {
@@ -34,17 +36,23 @@ type SutParams = {
 const history = createMemoryHistory({ initialEntries: ['/signup'] }) as any
 const makeSut = (params?: SutParams): SutTypes => {
   const addAccountSpy = new AddAccountSpy()
+  const saveAccessTokenMock = new SaveAccessTokenMock()
   const validationStub = new ValidationStub()
   validationStub.errorMessage = params?.validationError
   const sut = render(
     <Router history={history}>
-      <SignUp validation={validationStub} addAccount={addAccountSpy} />
+      <SignUp
+        validation={validationStub}
+        addAccount={addAccountSpy}
+        saveAccessToken={saveAccessTokenMock}
+      />
     </Router>
   )
 
   return {
     sut,
     addAccountSpy,
+    saveAccessTokenMock,
   }
 }
 
@@ -191,12 +199,43 @@ describe('SignUpComponent', () => {
 
   it('Should present error if AddAccount fails', async () => {
     const { sut, addAccountSpy } = makeSut()
-    const error = new InvalidCredentialsError()
-    jest.spyOn(addAccountSpy, 'add').mockReturnValueOnce(Promise.reject(error))
+    const error = new EmailInUseError()
+    jest.spyOn(addAccountSpy, 'add').mockRejectedValueOnce(error)
 
     await waitFor(() => simulateValidSubmit(sut))
 
     testElementText(sut, 'error-wrap', error.message)
     testChildCount(sut, 'error-wrap', 1)
+  })
+
+  it('Shoul call SaveAccessToken on success and move to correct page', async () => {
+    const { sut, addAccountSpy, saveAccessTokenMock } = makeSut()
+    await waitFor(() => simulateValidSubmit(sut))
+    expect(saveAccessTokenMock.accessToken).toBe(
+      addAccountSpy.account.accessToken
+    )
+    expect(history.length).toBe(1)
+    expect(history.location.pathname).toBe('/')
+  })
+
+  it('Should present error if SaveAccessToken fails', async () => {
+    const { sut, saveAccessTokenMock } = makeSut()
+    const error = new EmailInUseError()
+    jest
+      .spyOn(saveAccessTokenMock, 'save')
+      .mockReturnValueOnce(Promise.reject(error))
+
+    await waitFor(() => simulateValidSubmit(sut))
+
+    testElementText(sut, 'error-wrap', error.message)
+    testChildCount(sut, 'error-wrap', 1)
+  })
+
+  it('Should go to login page', async () => {
+    const { sut } = makeSut()
+    const login = sut.getByTestId('login')
+    fireEvent.click(login)
+    expect(history.length).toBe(2)
+    expect(history.location.pathname).toBe('/login')
   })
 })
