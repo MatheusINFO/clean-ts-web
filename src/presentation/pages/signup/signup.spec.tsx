@@ -7,17 +7,20 @@ import {
   fireEvent,
   render,
   RenderResult,
+  waitFor,
 } from '@testing-library/react'
-import SignUp from './signup'
 import {
   AddAccountSpy,
   populateInputField,
   testButtonIsDisabled,
   testChildCount,
   testElementExists,
+  testElementText,
   testStatusForField,
   ValidationStub,
 } from '@/presentation/test'
+import { InvalidCredentialsError } from '@/domain/erros'
+import SignUp from './signup'
 
 type SutTypes = {
   sut: RenderResult
@@ -173,5 +176,27 @@ describe('SignUpComponent', () => {
     simulateValidSubmit(sut)
 
     expect(addAccountSpy.callsCount).toBe(1)
+  })
+
+  it('Should not call AddAccount if form is invalid', () => {
+    const validationError = faker.random.words()
+    const { sut, addAccountSpy } = makeSut({
+      validationError,
+    })
+    populateInputField(sut, 'email', faker.internet.email())
+    fireEvent.submit(sut.getByTestId('form'))
+
+    expect(addAccountSpy.callsCount).toBe(0)
+  })
+
+  it('Should present error if AddAccount fails', async () => {
+    const { sut, addAccountSpy } = makeSut()
+    const error = new InvalidCredentialsError()
+    jest.spyOn(addAccountSpy, 'add').mockReturnValueOnce(Promise.reject(error))
+
+    await waitFor(() => simulateValidSubmit(sut))
+
+    testElementText(sut, 'error-wrap', error.message)
+    testChildCount(sut, 'error-wrap', 1)
   })
 })
