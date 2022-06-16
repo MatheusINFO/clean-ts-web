@@ -4,6 +4,7 @@ const baseUrl: string = Cypress.config().baseUrl
 
 describe('Login', () => {
   beforeEach(() => {
+    cy.server()
     cy.visit('login')
   })
 
@@ -56,15 +57,17 @@ describe('Login', () => {
   })
 
   it('Should present error if invalid credentials are provided', () => {
+    cy.route({
+      method: 'POST',
+      url: /login/,
+      status: 401,
+      response: {
+        error: faker.random.words(),
+      },
+    })
     cy.getByTestId('email').focus().type(faker.internet.email())
     cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
     cy.getByTestId('submit').click()
-    cy.getByTestId('error-wrap')
-      .getByTestId('spinner')
-      .should('exist')
-      .getByTestId('main-error')
-      .should('not.exist')
-
     cy.getByTestId('error-wrap')
       .getByTestId('spinner')
       .should('not.exist')
@@ -74,25 +77,81 @@ describe('Login', () => {
     cy.url().should('eq', `${baseUrl}/login`)
   })
 
-  it('Should present save accesstoken if valid credentiasl are provided', () => {
+  it('Should present error on UnexpectedError', () => {
+    cy.route({
+      method: 'POST',
+      url: /login/,
+      status: faker.helpers.randomize([400, 404, 500]),
+      response: {
+        error: faker.random.words(),
+      },
+    })
+    cy.getByTestId('email').focus().type(faker.internet.email())
+    cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5))
+    cy.getByTestId('submit').click()
+    cy.getByTestId('error-wrap')
+      .getByTestId('spinner')
+      .should('not.exist')
+      .getByTestId('main-error')
+      .should('contain.text', 'Algo de errado aconteceu. Tente novamente!')
+
+    cy.url().should('eq', `${baseUrl}/login`)
+  })
+
+  it('Should present UnexpectedError if invalid date is returned', () => {
+    cy.route({
+      method: 'POST',
+      url: /login/,
+      status: 200,
+      response: {
+        [faker.random.word()]: faker.random.uuid(),
+      },
+    })
+
     cy.getByTestId('email').focus().type('matheusinfo@github.com')
     cy.getByTestId('password').focus().type('12345')
     cy.getByTestId('submit').click()
     cy.getByTestId('error-wrap')
       .getByTestId('spinner')
-      .should('exist')
-      .getByTestId('main-error')
       .should('not.exist')
+      .getByTestId('main-error')
+      .should('contain.text', 'Algo de errado aconteceu. Tente novamente!')
+  })
 
-    cy.getByTestId('error-wrap')
-      .getByTestId('spinner')
-      .should('not.exist')
-      .getByTestId('main-error')
-      .should('contain.text', 'not.exists')
+  it('Should present save accessToken if valid credentiasl are provided', () => {
+    cy.route({
+      method: 'POST',
+      url: /login/,
+      status: 200,
+      response: {
+        accessToken: faker.random.uuid(),
+      },
+    })
+
+    cy.getByTestId('email').focus().type('matheusinfo@github.com')
+    cy.getByTestId('password').focus().type('12345')
+    cy.getByTestId('submit').click()
+    cy.getByTestId('error-wrap').should('not.exist')
 
     cy.url().should('eq', `${baseUrl}/`)
     cy.window().then((window) =>
       assert.isOk(window.localStorage.getItem('accessToken'))
     )
+  })
+
+  it('Should prevent multiple submits', () => {
+    cy.route({
+      method: 'POST',
+      url: /login/,
+      status: 200,
+      response: {
+        accessToken: faker.random.uuid(),
+      },
+    }).as('request')
+
+    cy.getByTestId('email').focus().type('matheusinfo@github.com')
+    cy.getByTestId('password').focus().type('12345')
+    cy.getByTestId('submit').dblclick()
+    cy.get('@request.all').should('have.length', 1)
   })
 })
