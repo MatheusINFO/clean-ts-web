@@ -4,3 +4,4 @@ coverage
 public
 public/todo.ts
 src/**/*.scss
+*.json
