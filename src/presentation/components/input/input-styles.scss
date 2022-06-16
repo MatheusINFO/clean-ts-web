@@ -5,6 +5,22 @@
   position: relative;
   border-bottom: 2px dashed $disabledBackground;
 
+  &[data-status='valid'] {
+    border-bottom-color: $valid;
+
+    &::after {
+      background-color: $valid;
+    }
+  }
+
+  &[data-status='invalid'] {
+    border-bottom-color: $invalid;
+
+    &::after {
+      background-color: $invalid;
+    }
+  }
+
   &::after {
     content: '';
     width: 100%;
@@ -26,7 +42,7 @@
     }
 
     label {
-      transform: scale(0.9) translateY(-20px);  
+      transform: scale(0.9) translateY(-20px);
     }
   }
 
@@ -47,7 +63,7 @@
     cursor: text;
     transform-origin: 0%;
     transform: translateY(0px);
-    transition: transform 500ms ease;
+    transition: transform 400ms ease;
   }
 
   .status {
