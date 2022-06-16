@@ -4,7 +4,7 @@ import {
   mockInvalidData,
   mockSuccess,
   mockUnexpectedError,
-} from './login-mocks'
+} from '../support/login-mocks'
 import {
   testHttpCallsCount,
   testInputStatus,
