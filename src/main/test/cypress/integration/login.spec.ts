@@ -129,8 +129,7 @@ describe('Login', () => {
     })
 
     cy.getByTestId('email').focus().type('matheusinfo@github.com')
-    cy.getByTestId('password').focus().type('12345')
-    cy.getByTestId('submit').click()
+    cy.getByTestId('password').focus().type('12345').type('{enter}')
     cy.getByTestId('error-wrap').should('not.exist')
 
     cy.url().should('eq', `${baseUrl}/`)
