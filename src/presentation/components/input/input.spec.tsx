@@ -39,4 +39,12 @@ describe('InputComponent', () => {
     fireEvent.focus(input)
     expect(input.readOnly).toBeFalsy()
   })
+
+  it('Should focus input on label click', () => {
+    const { sut } = makeSut()
+    const input = sut.getByTestId(field)
+    const label = sut.getByTestId(`${field}-label`)
+    fireEvent.click(label)
+    expect(input.focus).toBeTruthy()
+  })
 })
