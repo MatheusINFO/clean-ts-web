@@ -8,6 +8,15 @@ import {
   HttpStatusCode,
 } from '@/data/protocols/http'
 
+export const mockPostRequest = (): HttpPostParams => ({
+  url: faker.internet.url(),
+  body: faker.random.objectElement(),
+})
+
+export const mockGetRequest = (): HttpGetParams => ({
+  url: faker.internet.url(),
+})
+
 export class HttpPostClientSpy<R> implements HttpPostClient<R> {
   url?: string
   body?: any
@@ -21,11 +30,6 @@ export class HttpPostClientSpy<R> implements HttpPostClient<R> {
     return this.response
   }
 }
-
-export const mockPostRequest = (): HttpPostParams => ({
-  url: faker.internet.url(),
-  body: faker.random.objectElement(),
-})
 
 export class HttpGetClientSpy<R> implements HttpGetClient<R> {
   url: string
