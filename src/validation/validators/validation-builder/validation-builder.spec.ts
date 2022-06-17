@@ -4,8 +4,8 @@ import {
   EmailValidation,
   MinLengthValidation,
   RequiredFieldValidation,
+  CompareFieldsValidation,
 } from '@/validation/validators'
-import { CompareFieldsValidation } from '../compare-fields/compare-fields-validation'
 
 describe('ValidationBuilder', () => {
   it('Should return RequiredFieldValidation', () => {
