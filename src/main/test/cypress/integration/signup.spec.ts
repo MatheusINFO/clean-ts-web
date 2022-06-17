@@ -109,11 +109,11 @@ describe('SignUp', () => {
     cy.getByTestId('error-wrap').should('not.have.descendants')
   })
 
-  it('Should present save accessToken if valid credentiasl are provided', () => {
+  it('Should present save account if valid credentiasl are provided', () => {
     mockSuccess()
     simulateValidSubmit()
     testUrl('/')
-    testLocalStorageItem('accessToken')
+    testLocalStorageItem('account')
   })
 
   it('Should prevent multiple submits', () => {

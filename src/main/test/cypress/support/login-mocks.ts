@@ -10,6 +10,7 @@ export const mockUnexpectedError = (): void =>
 export const mockSuccess = (): void => {
   Helper.mockSuccess(/login/, 'POST', {
     accessToken: faker.random.uuid(),
+    name: faker.name.findName(),
   })
 }
 

@@ -16,5 +16,6 @@ export const mockInvalidData = (): void => {
 export const mockSuccess = (): void => {
   Helper.mockSuccess(/signup/, 'POST', {
     accessToken: faker.random.uuid(),
+    name: faker.name.findName(),
   })
 }
