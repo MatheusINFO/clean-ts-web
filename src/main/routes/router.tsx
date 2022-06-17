@@ -7,18 +7,26 @@ import {
   BrowserRouterProps,
 } from 'react-router-dom'
 import { ApiContext } from '@/presentation/contexts'
-import { setCurrentAccountAdapter } from '@/main/adapters'
+import {
+  getCurrentAccountAdapter,
+  setCurrentAccountAdapter,
+} from '@/main/adapters'
 import { makeLoginFactory, makeSignUpFactory } from '@/main/factories/pages'
+import PrivateRoute from './private-route'
 
 type Props = BrowserRouterProps | Readonly<BrowserRouterProps>
 
 const Router: React.FC<Props> = (props: Props) => (
-  <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountAdapter }}>
+  <ApiContext.Provider
+    value={{
+      setCurrentAccount: setCurrentAccountAdapter,
+      getCurrentAccount: getCurrentAccountAdapter,
+    }}>
     <BrowserRouter {...props}>
       <Switch>
         <Route exact path="/login" component={makeLoginFactory} />
         <Route exact path="/signup" component={makeSignUpFactory} />
-        <Route exact path="/" component={SurveyList} />
+        <PrivateRoute exact path="/" component={SurveyList} />
       </Switch>
     </BrowserRouter>
   </ApiContext.Provider>
