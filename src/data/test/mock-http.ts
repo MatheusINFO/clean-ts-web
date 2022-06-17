@@ -1,5 +1,7 @@
 import faker from 'faker'
 import {
+  HttpGetClient,
+  HttpGetParams,
   HttpPostClient,
   HttpPostParams,
   HttpResponse,
@@ -24,3 +26,11 @@ export const mockPostRequest = (): HttpPostParams => ({
   url: faker.internet.url(),
   body: faker.random.objectElement(),
 })
+
+export class HttpGetClientSpy implements HttpGetClient {
+  url: string
+
+  async get(params: HttpGetParams): Promise<void> {
+    this.url = params.url
+  }
+}
