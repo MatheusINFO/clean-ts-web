@@ -102,7 +102,7 @@ const SignUp: React.FC<Props> = ({
   }
 
   return (
-    <div className={Styles.signup}>
+    <div className={Styles.signupWrap}>
       <UnsignedHeader />
 
       <Context.Provider value={{ state, setState }}>
