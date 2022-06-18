@@ -10,6 +10,7 @@ module.exports = {
     '<rootDir>/node_modules/',
     '<rootDir>/src/main/test/cypress',
   ],
+  setupFilesAfterEnv: ['<rootDir>/src/main/config/jest-setup.ts'],
   coverageDirectory: 'coverage',
   testEnvironment: 'jsdom',
   transform: {

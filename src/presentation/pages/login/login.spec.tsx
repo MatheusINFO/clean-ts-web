@@ -8,12 +8,8 @@ import { ApiContext } from '@/presentation/contexts'
 import {
   ValidationStub,
   AuthenticationSpy,
-  testButtonIsDisabled,
-  testChildCount,
   testStatusForField,
   populateInputField,
-  testElementExists,
-  testElementText,
 } from '@/presentation/test'
 import { InvalidCredentialsError } from '@/domain/erros'
 import { AccountModel } from '@/domain/models'
@@ -66,8 +62,8 @@ describe('LoginComponent', () => {
       validationError,
     })
 
-    testButtonIsDisabled('submit', true)
-    testChildCount('error-wrap', 0)
+    expect(screen.getByTestId('submit')).toBeDisabled()
+    expect(screen.getByTestId('error-wrap').children).toHaveLength(0)
     testStatusForField('email', validationError)
     testStatusForField('password', validationError)
   })
@@ -106,13 +102,13 @@ describe('LoginComponent', () => {
     makeSut()
     populateInputField('email', faker.internet.email())
     populateInputField('password', faker.internet.password())
-    testButtonIsDisabled('submit', false)
+    expect(screen.getByTestId('submit')).toBeEnabled()
   })
 
   it('Should show spinner on submit', () => {
     makeSut()
     simulateValidSubmit()
-    testElementExists('spinner')
+    expect(screen.queryByTestId('spinner')).toBeInTheDocument()
   })
 
   it('Should call Authentication with correct values', () => {
@@ -153,8 +149,8 @@ describe('LoginComponent', () => {
 
     await waitFor(() => simulateValidSubmit())
 
-    testElementText('error-wrap', error.message)
-    testChildCount('error-wrap', 1)
+    expect(screen.getByTestId('error-wrap')).toHaveTextContent(error.message)
+    expect(screen.getByTestId('error-wrap').children).toHaveLength(1)
   })
 
   it('Shoul call setCurrentAccount on success and move to correct page', async () => {

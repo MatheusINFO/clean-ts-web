@@ -12,10 +12,6 @@ import {
 import {
   AddAccountSpy,
   populateInputField,
-  testButtonIsDisabled,
-  testChildCount,
-  testElementExists,
-  testElementText,
   testStatusForField,
   ValidationStub,
 } from '@/presentation/test'
@@ -77,8 +73,8 @@ describe('SignUpComponent', () => {
       validationError,
     })
 
-    testButtonIsDisabled('submit', true)
-    testChildCount('error-wrap', 0)
+    expect(screen.getByTestId('submit')).toBeDisabled()
+    expect(screen.getByTestId('error-wrap').children).toHaveLength(0)
     testStatusForField('name', validationError)
     testStatusForField('email', validationError)
     testStatusForField('password', validationError)
@@ -151,13 +147,13 @@ describe('SignUpComponent', () => {
     populateInputField('email', faker.internet.email())
     populateInputField('password', faker.internet.password())
     populateInputField('passwordConfirmation', faker.internet.password())
-    testButtonIsDisabled('submit', false)
+    expect(screen.getByTestId('submit')).toBeEnabled()
   })
 
   it('Should show spinner on submit', () => {
     makeSut()
     simulateValidSubmit()
-    testElementExists('spinner')
+    expect(screen.queryByTestId('spinner')).toBeInTheDocument()
   })
 
   it('Should call AddAccount with correct values', () => {
@@ -201,8 +197,8 @@ describe('SignUpComponent', () => {
 
     await waitFor(() => simulateValidSubmit())
 
-    testElementText('error-wrap', error.message)
-    testChildCount('error-wrap', 1)
+    expect(screen.getByTestId('error-wrap')).toHaveTextContent(error.message)
+    expect(screen.getByTestId('error-wrap').children).toHaveLength(1)
   })
 
   it('Shoul call setCurrentAccount on success and move to correct page', async () => {

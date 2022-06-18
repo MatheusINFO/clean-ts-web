@@ -1,18 +1,5 @@
 import { fireEvent, screen } from '@testing-library/react'
 
-export const testChildCount = (fieldName: string, quantity: number): void => {
-  const element = screen.getByTestId(fieldName)
-  expect(element.childElementCount).toBe(quantity)
-}
-
-export const testButtonIsDisabled = (
-  fieldName: string,
-  isDisabled: boolean
-): void => {
-  const button = screen.getByTestId(fieldName) as HTMLButtonElement
-  expect(button.disabled).toBe(isDisabled)
-}
-
 export const testStatusForField = (
   fieldName: string,
   validationError = ''
@@ -21,11 +8,12 @@ export const testStatusForField = (
   const field = screen.getByTestId(fieldName)
   const label = screen.getByTestId(`${fieldName}-label`)
 
-  expect(wrap.getAttribute('data-status')).toBe(
+  expect(wrap).toHaveAttribute(
+    'data-status',
     validationError ? 'invalid' : 'valid'
   )
-  expect(field.title).toBe(validationError)
-  expect(label.title).toBe(validationError)
+  expect(field).toHaveProperty('title', validationError)
+  expect(label).toHaveProperty('title', validationError)
 }
 
 export const populateInputField = (
@@ -37,14 +25,4 @@ export const populateInputField = (
   fireEvent.input(input, {
     target: { value: fieldValue },
   })
-}
-
-export const testElementExists = (fieldName: string): void => {
-  const element = screen.getByTestId(fieldName)
-  expect(element).toBeTruthy()
-}
-
-export const testElementText = (fieldName: string, text: string): void => {
-  const element = screen.getByTestId(fieldName)
-  expect(element.textContent).toBe(text)
 }
