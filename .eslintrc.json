@@ -22,7 +22,8 @@
     "space-before-function-paren": [0, "never"],
     "@typescript-eslint/require-await": "off",
     "react/prop-types": "off",
-    "@typescript-eslint/indent": "off" 
+    "@typescript-eslint/indent": "off",
+    "@typescript-eslint/no-floating-promises": "off"
   },
   "env": {
     "cypress/globals": true
