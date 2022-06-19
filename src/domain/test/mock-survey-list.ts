@@ -13,7 +13,7 @@ export const mockSurveyModel = (): SurveyModel => ({
       answer: faker.random.words(4),
     },
   ],
-  date: faker.date.recent(),
+  date: faker.date.recent().toISOString(),
   didAnswer: faker.random.boolean(),
 })
 
