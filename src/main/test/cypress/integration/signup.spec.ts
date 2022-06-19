@@ -1,15 +1,21 @@
 import faker from 'faker'
-import { testInputStatus, testMainError } from '../support/form-helpers'
-import {
-  mockEmailInUseError,
-  mockUnexpectedError,
-  mockSuccess,
-} from '../support/signup-mocks'
+import { testInputStatus, testMainError } from '../utils/form-helpers'
 import {
   testLocalStorageItem,
   testUrl,
   testHttpCallsCount,
-} from '../support/helpers'
+} from '../utils/helpers'
+import * as Http from '../utils/http-mocks'
+
+const path = /signup/
+
+const mockEmailInUseError = (): void => Http.mockForbiddenError(path, 'POST')
+
+const mockUnexpectedError = (): void => Http.mockServerError(path, 'POST')
+
+const mockSuccess = (): void => {
+  Http.mockSuccess(path, 'POST', 'fx:account')
+}
 
 const populateFields = (): void => {
   const password = faker.internet.password()

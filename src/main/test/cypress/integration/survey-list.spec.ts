@@ -1,20 +1,22 @@
-import faker from 'faker'
+import * as Http from '../utils/http-mocks'
 import {
   getLocalStorageItem,
   setLocalStorageItem,
   testUrl,
-} from '../support/helpers'
-import {
-  mockUnexpectedError,
-  mockAccessDeniedError,
-} from '../support/survey-list-mocks'
+} from '../utils/helpers'
+
+const path = /surveys/
+
+export const mockUnexpectedError = (): void => Http.mockServerError(path, 'GET')
+
+export const mockAccessDeniedError = (): void =>
+  Http.mockForbiddenError(path, 'GET')
 
 describe('SurveyList', () => {
   beforeEach(() => {
-    setLocalStorageItem('account', {
-      accessToken: faker.random.uuid(),
-      name: faker.name.findName(),
-    })
+    cy.fixture('account').then((account) =>
+      setLocalStorageItem('account', account)
+    )
   })
 
   it('Should present error on UnexpectedError', () => {

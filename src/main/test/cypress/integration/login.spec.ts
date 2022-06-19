@@ -1,15 +1,21 @@
 import faker from 'faker'
-import {
-  mockInvalidCredentialsError,
-  mockSuccess,
-  mockUnexpectedError,
-} from '../support/login-mocks'
-import { testInputStatus, testMainError } from '../support/form-helpers'
+import * as Http from '../utils/http-mocks'
+import { testInputStatus, testMainError } from '../utils/form-helpers'
 import {
   testLocalStorageItem,
   testUrl,
   testHttpCallsCount,
-} from '../support/helpers'
+} from '../utils/helpers'
+
+const path = /login/
+
+const mockInvalidCredentialsError = (): void => Http.mockUnauthorizedError(path)
+
+const mockUnexpectedError = (): void => Http.mockServerError(path, 'POST')
+
+const mockSuccess = (): void => {
+  Http.mockSuccess(path, 'POST', 'fx:account')
+}
 
 const populateFields = (): void => {
   cy.getByTestId('email').focus().type(faker.internet.email())
