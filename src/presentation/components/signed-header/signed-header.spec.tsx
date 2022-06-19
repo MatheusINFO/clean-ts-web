@@ -4,17 +4,22 @@ import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
 import SignedHeader from './signed-header'
 import { ApiContext } from '@/presentation/contexts'
+import { mockAccountModel } from '@/domain/test'
 
 type SutTypes = {
   setCurrentAccountMock: any
 }
 
 const history = createMemoryHistory({ initialEntries: ['/'] }) as any
-const makeSut = (): SutTypes => {
+const makeSut = (account = mockAccountModel()): SutTypes => {
   const setCurrentAccountMock = jest.fn()
 
   render(
-    <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock }}>
+    <ApiContext.Provider
+      value={{
+        setCurrentAccount: setCurrentAccountMock,
+        getCurrentAccount: () => account,
+      }}>
       <Router history={history}>
         <SignedHeader />
       </Router>
@@ -33,5 +38,11 @@ describe('SignedHeader', () => {
     fireEvent.click(screen.getByTestId('logout'))
     expect(setCurrentAccountMock).toHaveBeenCalledWith(undefined)
     expect(history.location.pathname).toBe('/login')
+  })
+
+  it('Should render username correctly', () => {
+    const account = mockAccountModel()
+    makeSut(account)
+    expect(screen.getByTestId('username')).toHaveTextContent(account.name)
   })
 })
