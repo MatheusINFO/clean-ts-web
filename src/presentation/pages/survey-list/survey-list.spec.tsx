@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen, waitFor } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import SurveyList from './survey-list'
 import { LoadSurveyList } from '@/domain/usecases'
 import { SurveyModel } from '@/domain/models'
@@ -56,5 +56,16 @@ describe('SurveyList', () => {
 
     expect(screen.queryByTestId('survey-list')).not.toBeInTheDocument()
     expect(screen.getByTestId('error')).toHaveTextContent(error.message)
+  })
+
+  it('Should call LoadSurveyList again on button click', async () => {
+    const loadSurveyListSpy = new LoadSurveyListSpy()
+    jest
+      .spyOn(loadSurveyListSpy, 'loadAll')
+      .mockRejectedValueOnce(new UnexpectedError())
+    await waitFor(() => makeSut(loadSurveyListSpy))
+
+    await waitFor(() => fireEvent.click(screen.getByTestId('reload')))
+    expect(loadSurveyListSpy.callsCount).toBe(1)
   })
 })
