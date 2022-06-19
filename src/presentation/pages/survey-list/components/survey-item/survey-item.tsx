@@ -7,30 +7,34 @@ type Props = {
   survey: SurveyModel
 }
 
-const SurveyItem: React.FC<Props> = ({ survey }: Props) => (
-  <li className={Styles.surveyItemWrap}>
-    <div className={Styles.surveyContent}>
-      <Icon className={Styles.iconWrap} iconName={IconName.thumbUp} />
+const SurveyItem: React.FC<Props> = ({ survey }: Props) => {
+  const iconName = survey.didAnswer ? IconName.thumbUp : IconName.thumbDown
 
-      <time>
-        <span data-testid="day" className={Styles.day}>
-          {survey.date.getDate()}
-        </span>
-        <span data-testid="month" className={Styles.month}>
-          {survey.date
-            .toLocaleString('pt-br', { month: 'short' })
-            .replace('.', '')}
-        </span>
-        <span data-testid="year" className={Styles.year}>
-          {survey.date.getFullYear()}
-        </span>
-      </time>
+  return (
+    <li className={Styles.surveyItemWrap}>
+      <div className={Styles.surveyContent}>
+        <Icon className={Styles.iconWrap} iconName={iconName} />
 
-      <p data-testid="question">{survey.question}</p>
-    </div>
+        <time>
+          <span data-testid="day" className={Styles.day}>
+            {survey.date.getDate().toString().padStart(2, '0')}
+          </span>
+          <span data-testid="month" className={Styles.month}>
+            {survey.date
+              .toLocaleString('pt-br', { month: 'short' })
+              .replace('.', '')}
+          </span>
+          <span data-testid="year" className={Styles.year}>
+            {survey.date.getFullYear()}
+          </span>
+        </time>
 
-    <footer>Ver Resultado</footer>
-  </li>
-)
+        <p data-testid="question">{survey.question}</p>
+      </div>
+
+      <footer>Ver Resultado</footer>
+    </li>
+  )
+}
 
 export default SurveyItem
