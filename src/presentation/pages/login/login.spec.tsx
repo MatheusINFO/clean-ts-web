@@ -12,11 +12,11 @@ import {
   populateInputField,
 } from '@/presentation/test'
 import { InvalidCredentialsError } from '@/domain/erros'
-import { AccountModel } from '@/domain/models'
+import { Authentication } from '@/domain/usecases'
 
 type SutTypes = {
   authenticationSpy: AuthenticationSpy
-  setCurrentAccountMock: (account: AccountModel) => void
+  setCurrentAccountMock: (account: Authentication.Params) => void
 }
 
 type SutParams = {

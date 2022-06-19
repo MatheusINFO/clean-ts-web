@@ -15,15 +15,15 @@ import {
   testStatusForField,
   ValidationStub,
 } from '@/presentation/test'
-import { AccountModel } from '@/domain/models'
 import { EmailInUseError } from '@/domain/erros'
 import { ApiContext } from '@/presentation/contexts'
 import SignUp from './signup'
+import { AddAccount } from '@/domain/usecases'
 
 type SutTypes = {
   sut: RenderResult
   addAccountSpy: AddAccountSpy
-  setCurrentAccountMock: (account: AccountModel) => void
+  setCurrentAccountMock: (account: AddAccount.Params) => void
 }
 
 type SutParams = {

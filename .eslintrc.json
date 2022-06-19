@@ -23,7 +23,10 @@
     "@typescript-eslint/require-await": "off",
     "react/prop-types": "off",
     "@typescript-eslint/indent": "off",
-    "@typescript-eslint/no-floating-promises": "off"
+    "@typescript-eslint/no-floating-promises": "off",
+    "@typescript-eslint/no-namespace": "off",
+    "no-redeclare": "off",
+    "import/export": "off"
   },
   "env": {
     "cypress/globals": true

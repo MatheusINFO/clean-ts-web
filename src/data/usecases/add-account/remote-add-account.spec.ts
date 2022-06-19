@@ -1,5 +1,4 @@
 import faker from 'faker'
-import { AccountModel } from '@/domain/models'
 import { mockAccountModel } from '@/domain/test'
 import { UnexpectedError, EmailInUseError } from '@/domain/erros'
 import { mockAddAccount } from '@/domain/test/mock-add-account'
@@ -9,11 +8,11 @@ import { RemoteAddAccount } from './remote-add-account'
 
 type SutTypes = {
   sut: RemoteAddAccount
-  httpPostClientSpy: HttpPostClientSpy<AccountModel>
+  httpPostClientSpy: HttpPostClientSpy<RemoteAddAccount.Result>
 }
 
 const makeSut = (url: string = faker.internet.url()): SutTypes => {
-  const httpPostClientSpy = new HttpPostClientSpy<AccountModel>()
+  const httpPostClientSpy = new HttpPostClientSpy<RemoteAddAccount.Result>()
   const sut = new RemoteAddAccount(url, httpPostClientSpy)
 
   return {
