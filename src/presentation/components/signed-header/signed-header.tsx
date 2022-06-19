@@ -1,17 +1,34 @@
-import React, { memo } from 'react'
+import React, { memo, useContext } from 'react'
 import { Logo } from '@/presentation/components'
+import { ApiContext } from '@/presentation/contexts'
 import Styles from './signed-header-styles.scss'
+import { useHistory } from 'react-router-dom'
 
-const SignedHeader: React.FC = () => (
-  <header className={Styles.headerWrap}>
-    <div className={Styles.headerContent}>
-      <Logo />
-      <div className={Styles.logoutWrap}>
-        <span>Matheus</span>
-        <a href="#">sair</a>
+const SignedHeader: React.FC = () => {
+  const history = useHistory()
+  const { setCurrentAccount } = useContext(ApiContext)
+
+  const logout = (
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ): void => {
+    event.preventDefault()
+    setCurrentAccount(undefined)
+    history.replace('/login')
+  }
+
+  return (
+    <header className={Styles.headerWrap}>
+      <div className={Styles.headerContent}>
+        <Logo />
+        <div className={Styles.logoutWrap}>
+          <span>Matheus</span>
+          <a data-testid="logout" href="#" onClick={logout}>
+            sair
+          </a>
+        </div>
       </div>
-    </div>
-  </header>
-)
+    </header>
+  )
+}
 
 export default memo(SignedHeader)

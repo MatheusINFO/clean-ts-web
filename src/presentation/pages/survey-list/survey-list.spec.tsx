@@ -1,15 +1,25 @@
 import React from 'react'
+import { createMemoryHistory } from 'history'
+import { Router } from 'react-router-dom'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
-import SurveyList from './survey-list'
 import { UnexpectedError } from '@/domain/erros'
 import { LoadSurveyListSpy } from '@/presentation/test'
+import { ApiContext } from '@/presentation/contexts'
+import SurveyList from './survey-list'
 
 type SutTypes = {
   loadSurveyListSpy: LoadSurveyListSpy
 }
 
+const history = createMemoryHistory({ initialEntries: ['/'] }) as any
 const makeSut = (loadSurveyListSpy = new LoadSurveyListSpy()): SutTypes => {
-  render(<SurveyList loadSurveyList={loadSurveyListSpy} />)
+  render(
+    <ApiContext.Provider value={{}}>
+      <Router history={history}>
+        <SurveyList loadSurveyList={loadSurveyListSpy} />
+      </Router>
+    </ApiContext.Provider>
+  )
 
   return {
     loadSurveyListSpy,
