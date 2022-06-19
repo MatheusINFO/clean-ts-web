@@ -10,3 +10,7 @@ export const testLocalStorageItem = (key: string): void => {
 export const testHttpCallsCount = (count: number): void => {
   cy.get('@request.all').should('have.length', count)
 }
+
+export const setLocalStorageItem = (key: string, value: object): void => {
+  localStorage.setItem(key, JSON.stringify(value))
+}
