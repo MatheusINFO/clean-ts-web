@@ -14,3 +14,7 @@ export const testHttpCallsCount = (count: number): void => {
 export const setLocalStorageItem = (key: string, value: object): void => {
   localStorage.setItem(key, JSON.stringify(value))
 }
+
+export const getLocalStorageItem = (key: string): any => {
+  return JSON.parse(localStorage.getItem(key))
+}
