@@ -1,16 +1,15 @@
 import faker from 'faker'
-import {
-  testHttpCallsCount,
-  testInputStatus,
-  testMainError,
-} from '../support/form-helper'
+import { testInputStatus, testMainError } from '../support/form-helpers'
 import {
   mockEmailInUseError,
-  mockInvalidData,
   mockUnexpectedError,
   mockSuccess,
 } from '../support/signup-mocks'
-import { testLocalStorageItem, testUrl } from '../support/http-mocks'
+import {
+  testLocalStorageItem,
+  testUrl,
+  testHttpCallsCount,
+} from '../support/helpers'
 
 const populateFields = (): void => {
   const password = faker.internet.password()
@@ -101,12 +100,6 @@ describe('SignUp', () => {
     simulateValidSubmit()
     testMainError('Algo de errado aconteceu. Tente novamente!')
     testUrl('/signup')
-  })
-
-  it('Should present UnexpectedError if invalid date is returned', () => {
-    mockInvalidData()
-    simulateValidSubmit()
-    cy.getByTestId('error-wrap').should('not.have.descendants')
   })
 
   it('Should present save account if valid credentiasl are provided', () => {
