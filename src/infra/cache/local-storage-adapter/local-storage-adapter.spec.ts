@@ -30,6 +30,14 @@ describe('LocalStorageAdapter', () => {
         JSON.stringify(value)
       )
     })
+
+    it('Should remove localStorage if value is null', () => {
+      const { sut } = makeSut()
+      const key = faker.database.column()
+      const value = undefined
+      sut.set(key, value)
+      expect(localStorage.removeItem).toHaveBeenCalledWith(key)
+    })
   })
 
   describe('GET', () => {
