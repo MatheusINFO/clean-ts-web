@@ -5,9 +5,10 @@ import { createMemoryHistory } from 'history'
 import SignedHeader from './signed-header'
 import { ApiContext } from '@/presentation/contexts'
 import { mockAccountModel } from '@/domain/test'
+import { AccountModel } from '@/domain/models'
 
 type SutTypes = {
-  setCurrentAccountMock: any
+  setCurrentAccountMock: (account: AccountModel) => void
 }
 
 const history = createMemoryHistory({ initialEntries: ['/'] }) as any

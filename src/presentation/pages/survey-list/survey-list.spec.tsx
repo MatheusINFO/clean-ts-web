@@ -2,22 +2,26 @@ import React from 'react'
 import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
-import { UnexpectedError } from '@/domain/erros'
+import { AccessDeniedError, UnexpectedError } from '@/domain/erros'
 import { LoadSurveyListSpy } from '@/presentation/test'
 import { ApiContext } from '@/presentation/contexts'
 import SurveyList from './survey-list'
 import { mockAccountModel } from '@/domain/test'
+import { AccountModel } from '@/domain/models'
 
 type SutTypes = {
   loadSurveyListSpy: LoadSurveyListSpy
+  setCurrentAccountMock: (account: AccountModel) => void
 }
 
 const history = createMemoryHistory({ initialEntries: ['/'] }) as any
 const makeSut = (loadSurveyListSpy = new LoadSurveyListSpy()): SutTypes => {
+  const setCurrentAccountMock = jest.fn()
+
   render(
     <ApiContext.Provider
       value={{
-        setCurrentAccount: jest.fn(),
+        setCurrentAccount: setCurrentAccountMock,
         getCurrentAccount: () => mockAccountModel(),
       }}>
       <Router history={history}>
@@ -28,10 +32,15 @@ const makeSut = (loadSurveyListSpy = new LoadSurveyListSpy()): SutTypes => {
 
   return {
     loadSurveyListSpy,
+    setCurrentAccountMock,
   }
 }
 
 describe('SurveyList', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
   it('Should present 4 empty items on start', async () => {
     makeSut()
     const surveyList = screen.getByTestId('survey-list')
@@ -59,6 +68,19 @@ describe('SurveyList', () => {
 
     expect(screen.queryByTestId('survey-list')).not.toBeInTheDocument()
     expect(screen.getByTestId('error')).toHaveTextContent(error.message)
+  })
+
+  it('Should logout on accessDeniedError', async () => {
+    const loadSurveyListSpy = new LoadSurveyListSpy()
+    jest
+      .spyOn(loadSurveyListSpy, 'loadAll')
+      .mockRejectedValueOnce(new AccessDeniedError())
+    const { setCurrentAccountMock } = await waitFor(() =>
+      makeSut(loadSurveyListSpy)
+    )
+
+    expect(setCurrentAccountMock).toHaveBeenCalledWith(undefined)
+    expect(history.location.pathname).toBe('/login')
   })
 
   it('Should call LoadSurveyList again on button click', async () => {
