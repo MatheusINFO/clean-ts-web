@@ -31,6 +31,7 @@ module.exports = merge(common, {
       },
     ],
   },
+  devtoll: 'inline-source-map',
   devServer: {
     contentBase: './public',
     writeToDisk: true,
