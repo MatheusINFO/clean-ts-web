@@ -34,11 +34,12 @@ module.exports = merge(common, {
   },
   externals: {
     react: 'React',
+    axios: 'axios',
     'react-dom': 'ReactDOM',
   },
   plugins: [
     new DefinePlugin({
-      API_URL: JSON.stringify('http://fordevs.herokuapp.com/api'),
+      API_URL: JSON.stringify('https://fordevs.herokuapp.com/api'),
     }),
     new HtmlWebPackPlugin({
       template: './template.prod.html',
