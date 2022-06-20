@@ -1,21 +1,11 @@
-const path = require('path')
 const { DefinePlugin } = require('webpack')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const HtmlWebPackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const merge = require('webpack-merge')
+const common = require('./webpack.common')
 
-module.exports = {
-  mode: 'development',
-  entry: './src/main/index.tsx',
-  output: {
-    path: path.join(__dirname, 'public/js'),
-    publicPath: '/public/js',
-    filename: 'bundle.js',
-  },
-  resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.scss'],
-    alias: {
-      '@': path.join(__dirname, 'src'),
-    },
-  },
+module.exports = merge(common, {
+  mode: 'production',
   module: {
     rules: [
       {
@@ -27,7 +17,7 @@ module.exports = {
         test: /\.scss$/,
         use: [
           {
-            loader: 'style-loader',
+            loader: MiniCssExtractPlugin.loader,
           },
           {
             loader: 'css-loader',
@@ -42,19 +32,19 @@ module.exports = {
       },
     ],
   },
-  devServer: {
-    contentBase: './public',
-    writeToDisk: true,
-    historyApiFallback: true,
-  },
   externals: {
     react: 'React',
     'react-dom': 'ReactDOM',
   },
   plugins: [
-    new CleanWebpackPlugin(),
     new DefinePlugin({
       API_URL: JSON.stringify('http://fordevs.herokuapp.com/api'),
     }),
+    new HtmlWebPackPlugin({
+      template: './template.prod.html',
+    }),
+    new MiniCssExtractPlugin({
+      filename: 'main-bundle-[hash].css',
+    }),
   ],
-}
+})

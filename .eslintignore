@@ -2,6 +2,6 @@ node_modules
 .vscode
 coverage
 public
-public/todo.ts
 src/**/*.scss
 *.json
+dist
