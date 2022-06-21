@@ -1,7 +1,7 @@
 import React from 'react'
 import faker from 'faker'
 import { Router } from 'react-router-dom'
-import { createMemoryHistory } from 'history'
+import { createMemoryHistory, MemoryHistory } from 'history'
 import {
   fireEvent,
   render,
@@ -24,14 +24,15 @@ type SutTypes = {
   sut: RenderResult
   addAccountSpy: AddAccountSpy
   setCurrentAccountMock: (account: AddAccount.Params) => void
+  history: MemoryHistory
 }
 
 type SutParams = {
   validationError: string
 }
 
-const history = createMemoryHistory({ initialEntries: ['/signup'] }) as any
 const makeSut = (params?: SutParams): SutTypes => {
+  const history = createMemoryHistory({ initialEntries: ['/signup'] }) as any
   const addAccountSpy = new AddAccountSpy()
   const validationStub = new ValidationStub()
   validationStub.errorMessage = params?.validationError
@@ -49,6 +50,7 @@ const makeSut = (params?: SutParams): SutTypes => {
     sut,
     addAccountSpy,
     setCurrentAccountMock,
+    history,
   }
 }
 
@@ -202,7 +204,7 @@ describe('SignUpComponent', () => {
   })
 
   it('Shoul call setCurrentAccount on success and move to correct page', async () => {
-    const { addAccountSpy, setCurrentAccountMock } = makeSut()
+    const { history, addAccountSpy, setCurrentAccountMock } = makeSut()
     await waitFor(() => simulateValidSubmit())
     expect(setCurrentAccountMock).toHaveBeenCalledWith(addAccountSpy.account)
     expect(history.length).toBe(1)
@@ -210,7 +212,7 @@ describe('SignUpComponent', () => {
   })
 
   it('Should go to login page', async () => {
-    makeSut()
+    const { history } = makeSut()
     const loginLink = screen.getByTestId('login-link')
     fireEvent.click(loginLink)
     expect(history.length).toBe(1)

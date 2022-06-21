@@ -1,5 +1,5 @@
 import React from 'react'
-import { createMemoryHistory } from 'history'
+import { createMemoryHistory, MemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { AccessDeniedError, UnexpectedError } from '@/domain/erros'
@@ -12,10 +12,11 @@ import { AccountModel } from '@/domain/models'
 type SutTypes = {
   loadSurveyListSpy: LoadSurveyListSpy
   setCurrentAccountMock: (account: AccountModel) => void
+  history: MemoryHistory
 }
 
-const history = createMemoryHistory({ initialEntries: ['/'] }) as any
 const makeSut = (loadSurveyListSpy = new LoadSurveyListSpy()): SutTypes => {
+  const history = createMemoryHistory({ initialEntries: ['/'] }) as any
   const setCurrentAccountMock = jest.fn()
 
   render(
@@ -33,6 +34,7 @@ const makeSut = (loadSurveyListSpy = new LoadSurveyListSpy()): SutTypes => {
   return {
     loadSurveyListSpy,
     setCurrentAccountMock,
+    history,
   }
 }
 
@@ -75,7 +77,7 @@ describe('SurveyList', () => {
     jest
       .spyOn(loadSurveyListSpy, 'loadAll')
       .mockRejectedValueOnce(new AccessDeniedError())
-    const { setCurrentAccountMock } = await waitFor(() =>
+    const { setCurrentAccountMock, history } = await waitFor(() =>
       makeSut(loadSurveyListSpy)
     )
 
