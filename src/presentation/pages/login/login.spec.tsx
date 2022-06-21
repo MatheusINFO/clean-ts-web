@@ -1,6 +1,6 @@
 import React from 'react'
 import { Router } from 'react-router-dom'
-import { createMemoryHistory, MemoryHistory } from 'history'
+import { createMemoryHistory } from 'history'
 import faker from 'faker'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import Login from './login'
@@ -17,7 +17,7 @@ import { Authentication } from '@/domain/usecases'
 type SutTypes = {
   authenticationSpy: AuthenticationSpy
   setCurrentAccountMock: (account: Authentication.Params) => void
-  history: MemoryHistory
+  history: any
 }
 
 type SutParams = {

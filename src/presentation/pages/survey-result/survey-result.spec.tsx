@@ -1,6 +1,6 @@
 import React from 'react'
 import { Router } from 'react-router-dom'
-import { createMemoryHistory, MemoryHistory } from 'history'
+import { createMemoryHistory } from 'history'
 import { screen, render, waitFor, fireEvent } from '@testing-library/react'
 import { ApiContext } from '@/presentation/contexts'
 import {
@@ -15,7 +15,7 @@ import { AccountModel } from '@/domain/models'
 type SutTypes = {
   loadSurveyResultSpy: LoadSurveyResultSpy
   setCurrentAccountMock: (account: AccountModel) => void
-  history: MemoryHistory
+  history: any
 }
 
 const makeSut = (loadSurveyResultSpy = new LoadSurveyResultSpy()): SutTypes => {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { createMemoryHistory, MemoryHistory } from 'history'
+import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
 import { render, RenderResult } from '@testing-library/react'
 import PrivateRoute from '@/main/routes/private-route'
@@ -8,7 +8,7 @@ import { mockAccountModel } from '@/domain/test'
 
 type SutTypes = {
   sut: RenderResult
-  history: MemoryHistory
+  history: any
 }
 
 const makeSut = (account = mockAccountModel()): SutTypes => {

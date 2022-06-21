@@ -1,7 +1,7 @@
 import React from 'react'
 import faker from 'faker'
 import { Router } from 'react-router-dom'
-import { createMemoryHistory, MemoryHistory } from 'history'
+import { createMemoryHistory } from 'history'
 import {
   fireEvent,
   render,
@@ -24,7 +24,7 @@ type SutTypes = {
   sut: RenderResult
   addAccountSpy: AddAccountSpy
   setCurrentAccountMock: (account: AddAccount.Params) => void
-  history: MemoryHistory
+  history: any
 }
 
 type SutParams = {

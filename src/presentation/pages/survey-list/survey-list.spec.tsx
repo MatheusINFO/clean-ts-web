@@ -1,5 +1,5 @@
 import React from 'react'
-import { createMemoryHistory, MemoryHistory } from 'history'
+import { createMemoryHistory } from 'history'
 import { Router } from 'react-router-dom'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { AccessDeniedError, UnexpectedError } from '@/domain/erros'
@@ -12,7 +12,7 @@ import { AccountModel } from '@/domain/models'
 type SutTypes = {
   loadSurveyListSpy: LoadSurveyListSpy
   setCurrentAccountMock: (account: AccountModel) => void
-  history: MemoryHistory
+  history: any
 }
 
 const makeSut = (loadSurveyListSpy = new LoadSurveyListSpy()): SutTypes => {

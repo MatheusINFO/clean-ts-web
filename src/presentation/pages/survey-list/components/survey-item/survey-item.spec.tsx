@@ -1,5 +1,5 @@
 import React from 'react'
-import { createMemoryHistory, MemoryHistory } from 'history'
+import { createMemoryHistory } from 'history'
 import { fireEvent, render, screen } from '@testing-library/react'
 import SurveyItem from './survey-item'
 import { mockSurveyModel } from '@/domain/test'
@@ -8,7 +8,7 @@ import { IconName } from '@/presentation/components'
 import { Router } from 'react-router-dom'
 
 type SutTypes = {
-  history: MemoryHistory
+  history: any
 }
 
 const makeSut = (survey: SurveyModel = mockSurveyModel()): SutTypes => {

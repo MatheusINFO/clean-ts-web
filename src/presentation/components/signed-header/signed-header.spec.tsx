@@ -1,7 +1,7 @@
 import React from 'react'
 import { fireEvent, render, screen } from '@testing-library/react'
 import { Router } from 'react-router-dom'
-import { createMemoryHistory, MemoryHistory } from 'history'
+import { createMemoryHistory } from 'history'
 import SignedHeader from './signed-header'
 import { ApiContext } from '@/presentation/contexts'
 import { mockAccountModel } from '@/domain/test'
@@ -9,7 +9,7 @@ import { AccountModel } from '@/domain/models'
 
 type SutTypes = {
   setCurrentAccountMock: (account: AccountModel) => void
-  history: MemoryHistory
+  history: any
 }
 
 const makeSut = (account = mockAccountModel()): SutTypes => {
