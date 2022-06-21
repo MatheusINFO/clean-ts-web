@@ -16,6 +16,7 @@ import {
   makeSurveyListFactory,
 } from '@/main/factories/pages'
 import PrivateRoute from './private-route'
+import { SurveyResult } from '@/presentation/pages'
 
 type Props = BrowserRouterProps | Readonly<BrowserRouterProps>
 
@@ -30,6 +31,7 @@ const Router: React.FC<Props> = (props: Props) => (
         <Route exact path="/login" component={makeLoginFactory} />
         <Route exact path="/signup" component={makeSignUpFactory} />
         <PrivateRoute exact path="/" component={makeSurveyListFactory} />
+        <PrivateRoute exact path="/surveys" component={SurveyResult} />
       </Switch>
     </BrowserRouter>
   </ApiContext.Provider>
