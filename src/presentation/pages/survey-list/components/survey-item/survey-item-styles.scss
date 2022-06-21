@@ -49,6 +49,15 @@
     &:hover {
       background-color: $primaryDark;
     }
+
+    a {
+      color: $white;
+      line-height: 40px;
+      text-transform: lowercase;
+      text-align: center;
+      display: bloc;
+      text-decoration: none;
+    }
   }
 }
 
