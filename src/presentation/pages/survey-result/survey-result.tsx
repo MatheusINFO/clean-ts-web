@@ -1,6 +1,11 @@
 import React from 'react'
 import FlipMove from 'react-flip-move'
-import { Footer, Loading, SignedHeader } from '@/presentation/components'
+import {
+  Calendar,
+  Footer,
+  Loading,
+  SignedHeader,
+} from '@/presentation/components'
 import Styles from './survey-result-styles.scss'
 
 const SurveyResult: React.FC = () => {
@@ -9,7 +14,11 @@ const SurveyResult: React.FC = () => {
       <SignedHeader />
 
       <div className={Styles.contentWrap}>
-        <h2>Qual é seu framework web favorito?</h2>
+        <hgroup>
+          <Calendar date={new Date()} className={Styles.calendarWrap} />
+          <h2>Qual é seu framework web favorito?</h2>
+        </hgroup>
+
         <FlipMove className={Styles.answerList}>
           <li className={Styles.active}>
             <img src="https://fordevs.herokuapp.com/static/img/logo-angular.png" />
