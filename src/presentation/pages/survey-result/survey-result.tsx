@@ -14,20 +14,24 @@ const SurveyResult: React.FC = () => {
       <SignedHeader />
 
       <div className={Styles.contentWrap}>
-        <hgroup>
-          <Calendar date={new Date()} className={Styles.calendarWrap} />
-          <h2>Qual é seu framework web favorito?</h2>
-        </hgroup>
+        {false && (
+          <>
+            <hgroup>
+              <Calendar date={new Date()} className={Styles.calendarWrap} />
+              <h2>Qual é seu framework web favorito?</h2>
+            </hgroup>
 
-        <FlipMove className={Styles.answerList}>
-          <li className={Styles.active}>
-            <img src="https://fordevs.herokuapp.com/static/img/logo-angular.png" />
-            <span className={Styles.answer}>ReactJS</span>
-            <span className={Styles.percent}>20</span>
-          </li>
-        </FlipMove>
+            <FlipMove className={Styles.answerList}>
+              <li className={Styles.active}>
+                <img src="https://fordevs.herokuapp.com/static/img/logo-angular.png" />
+                <span className={Styles.answer}>ReactJS</span>
+                <span className={Styles.percent}>20</span>
+              </li>
+            </FlipMove>
 
-        <button>Voltar</button>
+            <button>Voltar</button>
+          </>
+        )}
 
         {false && <Loading />}
       </div>
