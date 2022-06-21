@@ -11,6 +11,7 @@ export const mockRemoteSurveyResultModel =
         count: faker.random.number(),
         percent: faker.random.number(),
         image: faker.image.imageUrl(),
+        isCurrentAccountAnswer: faker.random.boolean(),
       },
     ],
   })
