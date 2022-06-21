@@ -1,7 +1,6 @@
 import faker from 'faker'
-import { mockAccountModel } from '@/domain/test'
+import { mockAccountModel, mockAddAccount } from '@/domain/test'
 import { UnexpectedError, EmailInUseError } from '@/domain/erros'
-import { mockAddAccount } from '@/domain/test/mock-add-account'
 import { HttpPostClientSpy } from '@/data/test'
 import { HttpStatusCode } from '@/data/protocols/http'
 import { RemoteAddAccount } from './remote-add-account'

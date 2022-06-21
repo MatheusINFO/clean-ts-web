@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import SurveyItem from './survey-item'
-import { mockSurveyModel } from '@/domain/test/mock-survey-list'
+import { mockSurveyModel } from '@/domain/test'
 import { SurveyModel } from '@/domain/models'
 import { IconName } from '@/presentation/components'
 
