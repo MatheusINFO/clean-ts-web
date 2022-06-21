@@ -14,7 +14,7 @@ const SurveyResult: React.FC = () => {
       <SignedHeader />
 
       <div className={Styles.contentWrap}>
-        {false && (
+        {true && (
           <>
             <hgroup>
               <Calendar date={new Date()} className={Styles.calendarWrap} />
