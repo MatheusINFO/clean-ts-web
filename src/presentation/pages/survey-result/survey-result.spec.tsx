@@ -1,7 +1,7 @@
 import React from 'react'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
-import { screen, render, waitFor } from '@testing-library/react'
+import { screen, render, waitFor, fireEvent } from '@testing-library/react'
 import { ApiContext } from '@/presentation/contexts'
 import {
   LoadSurveyResultSpy,
@@ -113,5 +113,16 @@ describe('SurveyResult', () => {
 
     expect(setCurrentAccountMock).toHaveBeenCalledWith(undefined)
     expect(history.location.pathname).toBe('/login')
+  })
+
+  it('Should call LoadSurveyResult again on button click', async () => {
+    const loadSurveyResultSpy = new LoadSurveyResultSpy()
+    jest
+      .spyOn(loadSurveyResultSpy, 'load')
+      .mockRejectedValueOnce(new UnexpectedError())
+    await waitFor(() => makeSut(loadSurveyResultSpy))
+
+    await waitFor(() => fireEvent.click(screen.getByTestId('reload')))
+    expect(loadSurveyResultSpy.callsCount).toBe(1)
   })
 })
