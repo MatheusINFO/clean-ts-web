@@ -2,7 +2,6 @@ import React from 'react'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
 import { screen, render, waitFor, fireEvent } from '@testing-library/react'
-import { ApiContext } from '@/presentation/contexts'
 import {
   LoadSurveyResultSpy,
   mockAccountModel,
@@ -13,6 +12,7 @@ import SurveyResult from './survey-result'
 import { AccessDeniedError, UnexpectedError } from '@/domain/erros'
 import { AccountModel } from '@/domain/models'
 import { RecoilRoot } from 'recoil'
+import { currentAccountState } from '@/presentation/components'
 
 type SutTypes = {
   loadSurveyResultSpy: LoadSurveyResultSpy
@@ -37,19 +37,19 @@ const makeSut = ({
   const setCurrentAccountMock = jest.fn()
 
   render(
-    <RecoilRoot>
-      <ApiContext.Provider
-        value={{
+    <RecoilRoot
+      initializeState={({ set }) =>
+        set(currentAccountState, {
           setCurrentAccount: setCurrentAccountMock,
           getCurrentAccount: () => mockAccountModel(),
-        }}>
-        <Router history={history}>
-          <SurveyResult
-            loadSurveyResult={loadSurveyResultSpy}
-            saveSurveyResult={saveSurveyResultSpy}
-          />
-        </Router>
-      </ApiContext.Provider>
+        })
+      }>
+      <Router history={history}>
+        <SurveyResult
+          loadSurveyResult={loadSurveyResultSpy}
+          saveSurveyResult={saveSurveyResultSpy}
+        />
+      </Router>
     </RecoilRoot>
   )
 
