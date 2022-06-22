@@ -44,7 +44,6 @@ const SurveyResult: React.FC<Props> = ({ loadSurveyResult }: Props) => {
         {state.surveyResult && (
           <SurveyResultData surveyResult={state.surveyResult} />
         )}
-
         {state.isLoading && <Loading />}
         {state.error && <Error error={state.error} reload={reload} />}
       </div>

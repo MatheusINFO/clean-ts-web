@@ -136,4 +136,11 @@ describe('SurveyResult', () => {
     fireEvent.click(screen.getByTestId('back-button'))
     expect(history.location.pathname).toBe('/')
   })
+
+  it('Should not present Loading on active answer click', async () => {
+    await waitFor(() => makeSut())
+    const answersWrap = screen.queryAllByTestId('answer-wrap')
+    fireEvent.click(answersWrap[0])
+    expect(screen.queryByTestId('loading')).not.toBeInTheDocument()
+  })
 })
