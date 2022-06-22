@@ -1,0 +1,48 @@
+@import '../../../../styles/colors.scss';
+
+.surveyAnswerWrap {
+  display: flex;
+  justify-content: space-between;
+  background-color: $white;
+  align-items: center;
+  padding: 16px;
+  border-radius: 8px;
+  margin-top: 16px;
+  color: $primaryDark;
+
+  &.active {
+    box-shadow: 0px 0px 3px 2px $primaryLight;
+  }
+
+  img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .answer {
+    flex-grow: 1;
+    margin-left: 16px;
+    font-size: 20px;
+  }
+
+  .percent {
+    font-size: 30px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .surveyAnswerWrap {
+    img {
+      width: 40px;
+      height: 40px;
+    }
+
+    .answer {
+      font-size: 16px;
+    }
+
+    .percent {
+      font-size: 20px;
+    }
+  }
+}
