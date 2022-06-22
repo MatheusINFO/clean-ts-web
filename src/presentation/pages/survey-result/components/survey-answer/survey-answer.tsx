@@ -1,14 +1,9 @@
+import { SurveyResultAnswerModel } from '@/domain/models'
 import React from 'react'
 import Styles from './survey-answer-styles.scss'
 
 type Props = {
-  answer: {
-    answer: string
-    count: number
-    percent: number
-    image?: string
-    isCurrentAccountAnswer: boolean
-  }
+  answer: SurveyResultAnswerModel
 }
 
 const SurveyAnswer: React.FC<Props> = ({ answer }: Props) => {
