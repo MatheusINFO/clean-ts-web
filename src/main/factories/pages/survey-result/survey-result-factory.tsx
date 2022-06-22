@@ -7,12 +7,12 @@ import {
 } from '@/main/factories/usecases'
 
 export const makeSurveyResultFactory: React.FC = () => {
-  const params: any = useParams()
+  const { id } = useParams<{ id: string }>()
 
   return (
     <SurveyResult
-      loadSurveyResult={makeRemoteSurveyResultFactory(params.id)}
-      saveSurveyResult={makeRemoteSaveResultFactory(params.id)}
+      loadSurveyResult={makeRemoteSurveyResultFactory(id)}
+      saveSurveyResult={makeRemoteSaveResultFactory(id)}
     />
   )
 }
