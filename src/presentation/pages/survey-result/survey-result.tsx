@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { Footer, Loading, SignedHeader, Error } from '@/presentation/components'
-import Styles from './survey-result-styles.scss'
-import { LoadSurveyResult } from '@/domain/usecases'
+import { LoadSurveyResult, SaveSurveyResult } from '@/domain/usecases'
 import { useErrorHandler } from '@/presentation/hooks'
-import { SurveyResultData } from './components'
+import { SurveyResultContext, SurveyResultData } from './components'
+import Styles from './survey-result-styles.scss'
 
 type Props = {
   loadSurveyResult: LoadSurveyResult
+  saveSurveyResult: SaveSurveyResult
 }
 
-const SurveyResult: React.FC<Props> = ({ loadSurveyResult }: Props) => {
+const SurveyResult: React.FC<Props> = ({
+  loadSurveyResult,
+  saveSurveyResult,
+}: Props) => {
   const handleError = useErrorHandler((error: Error) => {
     setState((old) => ({ ...old, surveyResult: null, error: error.message }))
   })
@@ -36,17 +40,24 @@ const SurveyResult: React.FC<Props> = ({ loadSurveyResult }: Props) => {
     }))
   }
 
+  const onAnswer = (answer: string): void => {
+    setState((old) => ({ ...old, isLoading: true }))
+    saveSurveyResult.save({ answer }).then().catch()
+  }
+
   return (
     <div className={Styles.surveyResultWrap}>
       <SignedHeader />
 
-      <div data-testid="survey-result" className={Styles.contentWrap}>
-        {state.surveyResult && (
-          <SurveyResultData surveyResult={state.surveyResult} />
-        )}
-        {state.isLoading && <Loading />}
-        {state.error && <Error error={state.error} reload={reload} />}
-      </div>
+      <SurveyResultContext.Provider value={{ onAnswer }}>
+        <div data-testid="survey-result" className={Styles.contentWrap}>
+          {state.surveyResult && (
+            <SurveyResultData surveyResult={state.surveyResult} />
+          )}
+          {state.isLoading && <Loading />}
+          {state.error && <Error error={state.error} reload={reload} />}
+        </div>
+      </SurveyResultContext.Provider>
 
       <Footer />
     </div>
