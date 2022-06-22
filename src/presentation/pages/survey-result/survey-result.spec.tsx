@@ -169,4 +169,18 @@ describe('SurveyResult', () => {
       answer: loadSurveyResultSpy.surveyResult.answers[1].answer,
     })
   })
+
+  it('Should render error on UnexpectedError', async () => {
+    const saveSurveyResultSpy = new SaveSurveyResultSpy()
+    const error = new UnexpectedError()
+    jest.spyOn(saveSurveyResultSpy, 'save').mockRejectedValueOnce(error)
+    await waitFor(() => makeSut({ saveSurveyResultSpy: saveSurveyResultSpy }))
+
+    const answersWrap = screen.queryAllByTestId('answer-wrap')
+    await waitFor(() => fireEvent.click(answersWrap[1]))
+
+    expect(screen.queryByTestId('question')).not.toBeInTheDocument()
+    expect(screen.queryByTestId('loading')).not.toBeInTheDocument()
+    expect(screen.getByTestId('error')).toHaveTextContent(error.message)
+  })
 })
