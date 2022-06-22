@@ -163,11 +163,12 @@ describe('SurveyResult', () => {
       makeSut()
     )
     const answersWrap = screen.queryAllByTestId('answer-wrap')
-    await waitFor(() => fireEvent.click(answersWrap[1]))
+    fireEvent.click(answersWrap[1])
     expect(screen.queryByTestId('loading')).toBeInTheDocument()
     expect(saveSurveyResultSpy.params).toEqual({
       answer: loadSurveyResultSpy.surveyResult.answers[1].answer,
     })
+    await waitFor(() => answersWrap)
   })
 
   it('Should render error on UnexpectedError', async () => {
@@ -234,5 +235,7 @@ describe('SurveyResult', () => {
 
     const percents = screen.queryAllByTestId('percent')
     expect(percents[0]).toHaveTextContent(`${surveyResult.answers[0].percent}%`)
+
+    expect(screen.queryByTestId('loading')).not.toBeInTheDocument()
   })
 })
