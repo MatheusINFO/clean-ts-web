@@ -1,14 +1,10 @@
 import React from 'react'
 import { createMemoryHistory } from 'history'
-import { Router } from 'react-router-dom'
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 import { AccessDeniedError, UnexpectedError } from '@/domain/erros'
-import { LoadSurveyListSpy } from '@/presentation/test'
+import { LoadSurveyListSpy, renderWithHistory } from '@/presentation/test'
 import SurveyList from './survey-list'
-import { mockAccountModel } from '@/domain/test'
 import { AccountModel } from '@/domain/models'
-import { RecoilRoot } from 'recoil'
-import { currentAccountState } from '@/presentation/components'
 
 type SutTypes = {
   loadSurveyListSpy: LoadSurveyListSpy
@@ -18,21 +14,11 @@ type SutTypes = {
 
 const makeSut = (loadSurveyListSpy = new LoadSurveyListSpy()): SutTypes => {
   const history = createMemoryHistory({ initialEntries: ['/'] }) as any
-  const setCurrentAccountMock = jest.fn()
 
-  render(
-    <RecoilRoot
-      initializeState={({ set }) =>
-        set(currentAccountState, {
-          setCurrentAccount: setCurrentAccountMock,
-          getCurrentAccount: () => mockAccountModel(),
-        })
-      }>
-      <Router history={history}>
-        <SurveyList loadSurveyList={loadSurveyListSpy} />
-      </Router>
-    </RecoilRoot>
-  )
+  const { setCurrentAccountMock } = renderWithHistory({
+    history,
+    Page: () => <SurveyList loadSurveyList={loadSurveyListSpy} />,
+  })
 
   return {
     loadSurveyListSpy,

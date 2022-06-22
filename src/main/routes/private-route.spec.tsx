@@ -1,35 +1,23 @@
 import React from 'react'
 import { createMemoryHistory } from 'history'
-import { Router } from 'react-router-dom'
-import { render, RenderResult } from '@testing-library/react'
 import PrivateRoute from '@/main/routes/private-route'
 import { mockAccountModel } from '@/domain/test'
-import { RecoilRoot } from 'recoil'
-import { currentAccountState } from '@/presentation/components'
+import { renderWithHistory } from '@/presentation/test'
 
 type SutTypes = {
-  sut: RenderResult
   history: any
 }
 
 const makeSut = (account = mockAccountModel()): SutTypes => {
   const history = createMemoryHistory({ initialEntries: ['/'] }) as any
-  const sut = render(
-    <RecoilRoot
-      initializeState={({ set }) =>
-        set(currentAccountState, {
-          setCurrentAccount: jest.fn(),
-          getCurrentAccount: () => account,
-        })
-      }>
-      <Router history={history}>
-        <PrivateRoute />
-      </Router>
-    </RecoilRoot>
-  )
+
+  renderWithHistory({
+    history,
+    Page: () => <PrivateRoute />,
+    account,
+  })
 
   return {
-    sut,
     history,
   }
 }

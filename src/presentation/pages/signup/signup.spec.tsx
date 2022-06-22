@@ -1,30 +1,21 @@
 import React from 'react'
 import faker from 'faker'
-import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
-import {
-  fireEvent,
-  render,
-  RenderResult,
-  waitFor,
-  screen,
-} from '@testing-library/react'
+import { fireEvent, waitFor, screen } from '@testing-library/react'
 import {
   AddAccountSpy,
   populateInputField,
+  renderWithHistory,
   testStatusForField,
   ValidationStub,
 } from '@/presentation/test'
 import { EmailInUseError } from '@/domain/erros'
 import SignUp from './signup'
-import { AddAccount } from '@/domain/usecases'
-import { RecoilRoot } from 'recoil'
-import { currentAccountState } from '@/presentation/components'
+import { AccountModel } from '@/domain/models'
 
 type SutTypes = {
-  sut: RenderResult
   addAccountSpy: AddAccountSpy
-  setCurrentAccountMock: (account: AddAccount.Params) => void
+  setCurrentAccountMock: (account: AccountModel) => void
   history: any
 }
 
@@ -37,24 +28,15 @@ const makeSut = (params?: SutParams): SutTypes => {
   const addAccountSpy = new AddAccountSpy()
   const validationStub = new ValidationStub()
   validationStub.errorMessage = params?.validationError
-  const setCurrentAccountMock = jest.fn()
 
-  const sut = render(
-    <RecoilRoot
-      initializeState={({ set }) =>
-        set(currentAccountState, {
-          setCurrentAccount: setCurrentAccountMock,
-          getCurrentAccount: jest.fn(),
-        })
-      }>
-      <Router history={history}>
-        <SignUp validation={validationStub} addAccount={addAccountSpy} />
-      </Router>
-    </RecoilRoot>
-  )
+  const { setCurrentAccountMock } = renderWithHistory({
+    history,
+    Page: () => (
+      <SignUp validation={validationStub} addAccount={addAccountSpy} />
+    ),
+  })
 
   return {
-    sut,
     addAccountSpy,
     setCurrentAccountMock,
     history,
