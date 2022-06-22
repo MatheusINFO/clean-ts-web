@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Footer, Loading, SignedHeader, Error } from '@/presentation/components'
 import { LoadSurveyResult, SaveSurveyResult } from '@/domain/usecases'
 import { useErrorHandler } from '@/presentation/hooks'
-import { SurveyResultContext, SurveyResultData } from './components'
+import {
+  SurveyResultData,
+  surveyResultState,
+  onSurveyAnswerState,
+} from './components'
 import Styles from './survey-result-styles.scss'
+import { useRecoilState, useSetRecoilState } from 'recoil'
 
 type Props = {
   loadSurveyResult: LoadSurveyResult
@@ -22,12 +27,8 @@ const SurveyResult: React.FC<Props> = ({
       isLoading: false,
     }))
   })
-  const [state, setState] = useState({
-    isLoading: false,
-    error: '',
-    surveyResult: null as LoadSurveyResult.Result,
-    reload: false,
-  })
+  const [state, setState] = useRecoilState(surveyResultState)
+  const setOnAnswer = useSetRecoilState(onSurveyAnswerState)
 
   useEffect(() => {
     loadSurveyResult
@@ -37,6 +38,10 @@ const SurveyResult: React.FC<Props> = ({
       )
       .catch(handleError)
   }, [state.reload])
+
+  useEffect(() => {
+    setOnAnswer({ onAnswer })
+  }, [])
 
   const reload = (): void => {
     setState((old) => ({
@@ -66,15 +71,13 @@ const SurveyResult: React.FC<Props> = ({
     <div className={Styles.surveyResultWrap}>
       <SignedHeader />
 
-      <SurveyResultContext.Provider value={{ onAnswer }}>
-        <div data-testid="survey-result" className={Styles.contentWrap}>
-          {state.surveyResult && (
-            <SurveyResultData surveyResult={state.surveyResult} />
-          )}
-          {state.isLoading && <Loading />}
-          {state.error && <Error error={state.error} reload={reload} />}
-        </div>
-      </SurveyResultContext.Provider>
+      <div data-testid="survey-result" className={Styles.contentWrap}>
+        {state.surveyResult && (
+          <SurveyResultData surveyResult={state.surveyResult} />
+        )}
+        {state.isLoading && <Loading />}
+        {state.error && <Error error={state.error} reload={reload} />}
+      </div>
 
       <Footer />
     </div>

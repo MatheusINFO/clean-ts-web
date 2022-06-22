@@ -12,6 +12,7 @@ import {
 import SurveyResult from './survey-result'
 import { AccessDeniedError, UnexpectedError } from '@/domain/erros'
 import { AccountModel } from '@/domain/models'
+import { RecoilRoot } from 'recoil'
 
 type SutTypes = {
   loadSurveyResultSpy: LoadSurveyResultSpy
@@ -36,18 +37,20 @@ const makeSut = ({
   const setCurrentAccountMock = jest.fn()
 
   render(
-    <ApiContext.Provider
-      value={{
-        setCurrentAccount: setCurrentAccountMock,
-        getCurrentAccount: () => mockAccountModel(),
-      }}>
-      <Router history={history}>
-        <SurveyResult
-          loadSurveyResult={loadSurveyResultSpy}
-          saveSurveyResult={saveSurveyResultSpy}
-        />
-      </Router>
-    </ApiContext.Provider>
+    <RecoilRoot>
+      <ApiContext.Provider
+        value={{
+          setCurrentAccount: setCurrentAccountMock,
+          getCurrentAccount: () => mockAccountModel(),
+        }}>
+        <Router history={history}>
+          <SurveyResult
+            loadSurveyResult={loadSurveyResultSpy}
+            saveSurveyResult={saveSurveyResultSpy}
+          />
+        </Router>
+      </ApiContext.Provider>
+    </RecoilRoot>
   )
 
   return {
@@ -243,10 +246,8 @@ describe('SurveyResult', () => {
     const { saveSurveyResultSpy } = await waitFor(() => makeSut())
 
     const answersWrap = screen.queryAllByTestId('answer-wrap')
-    fireEvent.click(answersWrap[1])
-    fireEvent.click(answersWrap[1])
-
-    await waitFor(() => screen.getByTestId('survey-result'))
+    await waitFor(() => fireEvent.click(answersWrap[1]))
+    await waitFor(() => fireEvent.click(answersWrap[1]))
 
     expect(saveSurveyResultSpy.callsCount).toBe(1)
   })
