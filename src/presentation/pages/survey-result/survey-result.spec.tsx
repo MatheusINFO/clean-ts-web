@@ -238,4 +238,16 @@ describe('SurveyResult', () => {
 
     expect(screen.queryByTestId('loading')).not.toBeInTheDocument()
   })
+
+  it('Should prevent multiple answer click', async () => {
+    const { saveSurveyResultSpy } = await waitFor(() => makeSut())
+
+    const answersWrap = screen.queryAllByTestId('answer-wrap')
+    fireEvent.click(answersWrap[1])
+    fireEvent.click(answersWrap[1])
+
+    await waitFor(() => screen.getByTestId('survey-result'))
+
+    expect(saveSurveyResultSpy.callsCount).toBe(1)
+  })
 })
