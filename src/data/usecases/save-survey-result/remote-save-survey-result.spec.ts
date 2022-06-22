@@ -1,4 +1,5 @@
 import faker from 'faker'
+import { mockSaveSurveyResultParams } from '@/domain/test'
 import { SaveSurveyResult } from '@/domain/usecases'
 import { HttpStatusCode } from '@/data/protocols/http'
 import { HttpClientSpy, mockRemoteSurveyResultModel } from '@/data/test'
@@ -29,8 +30,10 @@ describe('RemoteSaveSurveyResult', () => {
         date: faker.date.recent(),
       }),
     }
-    await sut.save({ answer: faker.random.word() })
+    const saveSurveyResultParams = mockSaveSurveyResultParams()
+    await sut.save(saveSurveyResultParams)
     expect(httpClientSpy.url).toBe(url)
     expect(httpClientSpy.method).toBe('put')
+    expect(httpClientSpy.body).toBe(saveSurveyResultParams)
   })
 })

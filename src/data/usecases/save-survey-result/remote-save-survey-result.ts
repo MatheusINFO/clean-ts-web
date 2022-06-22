@@ -14,6 +14,7 @@ export class RemoteSaveSurveyResult implements SaveSurveyResult {
     await this.httpGetClient.request({
       url: this.url,
       method: 'put',
+      body: params,
     })
     return null
   }
