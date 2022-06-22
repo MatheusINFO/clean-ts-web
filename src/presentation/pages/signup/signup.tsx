@@ -1,16 +1,12 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import Styles from './signup-styles.scss'
-import {
-  Input,
-  Footer,
-  FormStatus,
-  UnsignedHeader,
-  SubmitButton,
-} from '@/presentation/components'
-import { FormContext, ApiContext } from '@/presentation/contexts'
+import { Footer, UnsignedHeader } from '@/presentation/components'
+import { ApiContext } from '@/presentation/contexts'
 import { Validation } from '@/presentation/protocols/validation'
 import { AddAccount } from '@/domain/usecases'
+import { Input, signupState, SubmitButton, FormStatus } from './components'
+import { useRecoilState } from 'recoil'
 
 type Props = {
   validation: Validation
@@ -20,19 +16,7 @@ type Props = {
 const SignUp: React.FC<Props> = ({ validation, addAccount }: Props) => {
   const { setCurrentAccount } = useContext(ApiContext)
   const history = useHistory()
-  const [state, setState] = useState({
-    isLoading: false,
-    isFormInvalid: true,
-    name: '',
-    email: '',
-    password: '',
-    passwordConfirmation: '',
-    mainError: '',
-    nameError: '',
-    emailError: '',
-    passwordError: '',
-    passwordConfirmationError: '',
-  })
+  const [state, setState] = useRecoilState(signupState)
 
   useEffect(() => validate('name'), [state.name])
   useEffect(() => validate('email'), [state.email])
@@ -75,10 +59,10 @@ const SignUp: React.FC<Props> = ({ validation, addAccount }: Props) => {
         return
       }
 
-     setState((old) => ({
-       ...old,
-       isLoading: true,
-     }))
+      setState((old) => ({
+        ...old,
+        isLoading: true,
+      }))
 
       const account = await addAccount.add({
         name: state.name,
@@ -91,11 +75,11 @@ const SignUp: React.FC<Props> = ({ validation, addAccount }: Props) => {
 
       history.replace('/')
     } catch (error) {
-     setState((old) => ({
-       ...old,
-       isLoading: false,
-       mainError: error.message,
-     }))
+      setState((old) => ({
+        ...old,
+        isLoading: false,
+        mainError: error.message,
+      }))
     }
   }
 
@@ -103,35 +87,26 @@ const SignUp: React.FC<Props> = ({ validation, addAccount }: Props) => {
     <div className={Styles.signupWrap}>
       <UnsignedHeader />
 
-      <FormContext.Provider value={{ state, setState }}>
-        <form
-          data-testid="form"
-          className={Styles.form}
-          onSubmit={handleSubmit}>
-          <h2>Criar conta</h2>
-          <Input type="text" name="name" placeholder="Digite seu nome" />
-          <Input type="email" name="email" placeholder="Digite seu e-mail" />
-          <Input
-            type="password"
-            name="password"
-            placeholder="Digite sua senha"
-          />
-          <Input
-            type="password"
-            name="passwordConfirmation"
-            placeholder="Confirme sua senha"
-          />
-          <SubmitButton text="Cadastrar" />
-          <Link
-            data-testid="login-link"
-            replace
-            to="/login"
-            className={Styles.link}>
-            Voltar para Login
-          </Link>
-          <FormStatus />
-        </form>
-      </FormContext.Provider>
+      <form data-testid="form" className={Styles.form} onSubmit={handleSubmit}>
+        <h2>Criar conta</h2>
+        <Input type="text" name="name" placeholder="Digite seu nome" />
+        <Input type="email" name="email" placeholder="Digite seu e-mail" />
+        <Input type="password" name="password" placeholder="Digite sua senha" />
+        <Input
+          type="password"
+          name="passwordConfirmation"
+          placeholder="Confirme sua senha"
+        />
+        <SubmitButton text="Cadastrar" />
+        <Link
+          data-testid="login-link"
+          replace
+          to="/login"
+          className={Styles.link}>
+          Voltar para Login
+        </Link>
+        <FormStatus />
+      </form>
 
       <Footer />
     </div>

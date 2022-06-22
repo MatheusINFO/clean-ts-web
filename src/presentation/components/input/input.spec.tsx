@@ -1,7 +1,6 @@
 import React from 'react'
 import faker from 'faker'
 import { fireEvent, render, RenderResult } from '@testing-library/react'
-import { FormContext } from '@/presentation/contexts'
 import Input from './input'
 
 let field: string = faker.database.column()
@@ -11,11 +10,7 @@ type SutTypes = {
 }
 
 const makeSut = (): SutTypes => {
-  const sut = render(
-    <FormContext.Provider value={{ state: {} }}>
-      <Input name={field} />
-    </FormContext.Provider>
-  )
+  const sut = render(<Input name={field} state={{}} setState={{}} />)
 
   return {
     sut,

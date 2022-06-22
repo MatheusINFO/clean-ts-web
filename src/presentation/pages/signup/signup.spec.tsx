@@ -19,6 +19,7 @@ import { EmailInUseError } from '@/domain/erros'
 import { ApiContext } from '@/presentation/contexts'
 import SignUp from './signup'
 import { AddAccount } from '@/domain/usecases'
+import { RecoilRoot } from 'recoil'
 
 type SutTypes = {
   sut: RenderResult
@@ -39,11 +40,13 @@ const makeSut = (params?: SutParams): SutTypes => {
   const setCurrentAccountMock = jest.fn()
 
   const sut = render(
-    <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock }}>
-      <Router history={history}>
-        <SignUp validation={validationStub} addAccount={addAccountSpy} />
-      </Router>
-    </ApiContext.Provider>
+    <RecoilRoot>
+      <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock }}>
+        <Router history={history}>
+          <SignUp validation={validationStub} addAccount={addAccountSpy} />
+        </Router>
+      </ApiContext.Provider>
+    </RecoilRoot>
   )
 
   return {

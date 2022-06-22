@@ -1,17 +1,14 @@
-import React, { useContext } from 'react'
-import { FormContext } from '@/presentation/contexts'
+import React from 'react'
 
 type Props = {
   text: string
+  state: any
 }
 
-const SubmitButton: React.FC<Props> = ({ text }) => {
-  const { state } = useContext(FormContext)
-  return (
-    <button data-testid="submit" disabled={state.isFormInvalid} type="submit">
-      {text}
-    </button>
-  )
-}
+const SubmitButton: React.FC<Props> = ({ text, state }: Props) => (
+  <button data-testid="submit" disabled={state.isFormInvalid} type="submit">
+    {text}
+  </button>
+)
 
 export default SubmitButton
