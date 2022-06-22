@@ -9,7 +9,7 @@ export const mockSurveyResultModel = (): LoadSurveyResult.Result => ({
   question: faker.random.words(10),
   answers: [
     {
-      answer: faker.random.words(4),
+      answer: faker.random.words(2),
       image: faker.image.imageUrl(),
       count: faker.random.number(),
       percent: faker.random.number(),
