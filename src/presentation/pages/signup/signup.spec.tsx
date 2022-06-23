@@ -1,7 +1,10 @@
 import React from 'react'
 import faker from 'faker'
-import { createMemoryHistory } from 'history'
+import { createMemoryHistory, MemoryHistory } from 'history'
 import { fireEvent, waitFor, screen } from '@testing-library/react'
+
+import { AccountModel } from '@/domain/models'
+import { EmailInUseError } from '@/domain/erros'
 import {
   AddAccountSpy,
   populateInputField,
@@ -9,14 +12,12 @@ import {
   testStatusForField,
   ValidationStub,
 } from '@/presentation/test'
-import { EmailInUseError } from '@/domain/erros'
 import SignUp from './signup'
-import { AccountModel } from '@/domain/models'
 
 type SutTypes = {
   addAccountSpy: AddAccountSpy
   setCurrentAccountMock: (account: AccountModel) => void
-  history: any
+  history: MemoryHistory
 }
 
 type SutParams = {
@@ -196,7 +197,6 @@ describe('SignUpComponent', () => {
     const { history, addAccountSpy, setCurrentAccountMock } = makeSut()
     await waitFor(() => simulateValidSubmit())
     expect(setCurrentAccountMock).toHaveBeenCalledWith(addAccountSpy.account)
-    expect(history.length).toBe(1)
     expect(history.location.pathname).toBe('/')
   })
 
@@ -204,7 +204,6 @@ describe('SignUpComponent', () => {
     const { history } = makeSut()
     const loginLink = screen.getByTestId('login-link')
     fireEvent.click(loginLink)
-    expect(history.length).toBe(1)
     expect(history.location.pathname).toBe('/login')
   })
 })

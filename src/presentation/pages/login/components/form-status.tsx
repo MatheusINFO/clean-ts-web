@@ -1,7 +1,8 @@
 import React from 'react'
 import { useRecoilValue } from 'recoil'
+
 import { FormStatus as FormStatusBase } from '@/presentation/components'
-import { loginState } from './atom'
+import { loginState } from './atoms'
 
 const FormStatus: React.FC = () => {
   const state = useRecoilValue(loginState)

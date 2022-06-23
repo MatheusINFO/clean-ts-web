@@ -1,5 +1,6 @@
 import 'jest-localstorage-mock'
 import faker from 'faker'
+
 import { LocalStorageAdapter } from './local-storage-adapter'
 
 type SutTypes = {

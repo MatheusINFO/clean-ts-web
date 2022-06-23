@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
-import Styles from './signup-styles.scss'
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
+
+import { AddAccount } from '@/domain/usecases'
 import {
   currentAccountState,
   Footer,
   UnsignedHeader,
 } from '@/presentation/components'
 import { Validation } from '@/presentation/protocols/validation'
-import { AddAccount } from '@/domain/usecases'
 import { Input, signupState, SubmitButton, FormStatus } from './components'
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil'
+import Styles from './signup-styles.scss'
 
 type Props = {
   validation: Validation

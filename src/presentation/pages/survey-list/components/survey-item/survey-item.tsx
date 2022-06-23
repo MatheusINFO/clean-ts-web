@@ -1,8 +1,9 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+
+import { SurveyModel } from '@/domain/models'
 import { Calendar, Icon, IconName } from '@/presentation/components'
 import Styles from './survey-item-styles.scss'
-import { SurveyModel } from '@/domain/models'
-import { Link } from 'react-router-dom'
 
 type Props = {
   survey: SurveyModel

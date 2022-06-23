@@ -1,9 +1,9 @@
-import { makeLoginValidationFactory } from './login-validation-factory'
 import {
   MinLengthValidation,
   RequiredFieldValidation,
   ValidationComposite,
 } from '@/validation/validators'
+import { makeLoginValidationFactory } from './login-validation-factory'
 
 describe('LoginValidationFactory', () => {
   it('Should make ValidationComposite with correct validations', () => {

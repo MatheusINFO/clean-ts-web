@@ -1,4 +1,5 @@
 import faker from 'faker'
+
 import { AddAccount, Authentication } from '@/domain/usecases'
 
 export const mockAuthentication = (): Authentication.Params => ({

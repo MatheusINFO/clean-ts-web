@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios'
+
 import { HttpClient } from '@/data/protocols/http'
 
 export class AxiosHttpClient implements HttpClient {

@@ -1,5 +1,6 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
+
 import Calendar from './calendar'
 
 const makeSut = (date: Date): void => {

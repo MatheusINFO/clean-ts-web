@@ -1,6 +1,7 @@
 import faker from 'faker'
-import { RequiredFieldValidation } from './required-field-validation'
+
 import { RequiredFieldError } from '@/validation/errors'
+import { RequiredFieldValidation } from './required-field-validation'
 
 let field: string = faker.database.column()
 

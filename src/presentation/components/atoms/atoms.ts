@@ -1,4 +1,5 @@
 import { atom } from 'recoil'
+
 import { AccountModel } from '@/domain/models'
 
 export const currentAccountState = atom({

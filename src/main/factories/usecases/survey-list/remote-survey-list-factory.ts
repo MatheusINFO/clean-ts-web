@@ -1,7 +1,7 @@
 import { LoadSurveyList } from '@/domain/usecases'
+import { RemoteLoadSurveyList } from '@/data/usecases'
 import { makeApiUrl } from '@/main/factories/http'
 import { makeAuthorizeHttpClientDecoratorFactory } from '@/main/factories/decorators'
-import { RemoteLoadSurveyList } from '@/data/usecases/load-survey-list/remote-load-survey-list'
 
 export const makeRemoteSurveyListFactory = (): LoadSurveyList => {
   return new RemoteLoadSurveyList(

@@ -1,4 +1,5 @@
 import { atom } from 'recoil'
+
 import { SurveyModel } from '@/domain/models'
 
 export const surveyListState = atom({

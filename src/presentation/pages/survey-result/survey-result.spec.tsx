@@ -1,21 +1,22 @@
 import React from 'react'
-import { createMemoryHistory } from 'history'
+import { createMemoryHistory, MemoryHistory } from 'history'
 import { screen, waitFor, fireEvent } from '@testing-library/react'
+
 import {
   LoadSurveyResultSpy,
   mockSurveyResultModel,
   SaveSurveyResultSpy,
 } from '@/domain/test'
-import SurveyResult from './survey-result'
-import { AccessDeniedError, UnexpectedError } from '@/domain/erros'
 import { AccountModel } from '@/domain/models'
+import { AccessDeniedError, UnexpectedError } from '@/domain/erros'
 import { renderWithHistory } from '@/presentation/test'
+import SurveyResult from './survey-result'
 
 type SutTypes = {
   loadSurveyResultSpy: LoadSurveyResultSpy
   saveSurveyResultSpy: SaveSurveyResultSpy
   setCurrentAccountMock: (account: AccountModel) => void
-  history: any
+  history: MemoryHistory
 }
 
 type SutParams = {
@@ -140,7 +141,7 @@ describe('SurveyResult', () => {
   it('Should goto SurveyList on back button click', async () => {
     const { history } = await waitFor(() => makeSut())
     fireEvent.click(screen.getByTestId('back-button'))
-    expect(history.location.pathname).toBe('/')
+    expect(history.location.pathname).toBe('/survey/any_id')
   })
 
   it('Should not present Loading on active answer click', async () => {

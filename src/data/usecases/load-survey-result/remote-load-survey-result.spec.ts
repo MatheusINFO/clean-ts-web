@@ -1,4 +1,5 @@
 import faker from 'faker'
+
 import { LoadSurveyResult } from '@/domain/usecases'
 import { AccessDeniedError, UnexpectedError } from '@/domain/erros'
 import { HttpStatusCode } from '@/data/protocols/http'

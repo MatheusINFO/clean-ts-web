@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react'
-import { Footer, Loading, SignedHeader, Error } from '@/presentation/components'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+
 import { LoadSurveyResult, SaveSurveyResult } from '@/domain/usecases'
 import { useErrorHandler } from '@/presentation/hooks'
+import { Footer, Loading, SignedHeader, Error } from '@/presentation/components'
 import {
   SurveyResultData,
   surveyResultState,
   onSurveyAnswerState,
 } from './components'
 import Styles from './survey-result-styles.scss'
-import { useRecoilState, useSetRecoilState } from 'recoil'
 
 type Props = {
   loadSurveyResult: LoadSurveyResult

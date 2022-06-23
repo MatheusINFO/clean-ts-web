@@ -1,4 +1,5 @@
 import faker from 'faker'
+
 import { LoadSurveyResult, SaveSurveyResult } from '@/domain/usecases'
 
 export const mockSaveSurveyResultParams = (): SaveSurveyResult.Params => ({

@@ -1,7 +1,8 @@
 import React from 'react'
 import { useRecoilState } from 'recoil'
+
 import { Input as InputBase } from '@/presentation/components'
-import { loginState } from './atom'
+import { loginState } from './atoms'
 
 type Props = {
   type: string

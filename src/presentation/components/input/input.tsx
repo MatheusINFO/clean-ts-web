@@ -1,4 +1,5 @@
 import React, { useRef } from 'react'
+
 import Styles from './input-styles.scss'
 
 type Props = React.DetailedHTMLProps<

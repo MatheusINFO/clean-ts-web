@@ -1,6 +1,7 @@
 import React, { memo } from 'react'
-import Styles from './unsigned-header-styles.scss'
+
 import { Logo } from '@/presentation/components'
+import Styles from './unsigned-header-styles.scss'
 
 const UnsignedHeader: React.FC = () => (
   <header className={Styles.headerWrap}>

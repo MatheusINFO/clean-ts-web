@@ -1,11 +1,12 @@
 import faker from 'faker'
-import { ValidationBuilder } from './validation-builder'
+
 import {
   EmailValidation,
   MinLengthValidation,
   RequiredFieldValidation,
   CompareFieldsValidation,
 } from '@/validation/validators'
+import { ValidationBuilder } from './validation-builder'
 
 describe('ValidationBuilder', () => {
   it('Should return RequiredFieldValidation', () => {

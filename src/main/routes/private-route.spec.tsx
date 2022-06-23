@@ -1,11 +1,12 @@
 import React from 'react'
-import { createMemoryHistory } from 'history'
-import PrivateRoute from '@/main/routes/private-route'
+import { createMemoryHistory, MemoryHistory } from 'history'
+
 import { mockAccountModel } from '@/domain/test'
 import { renderWithHistory } from '@/presentation/test'
+import PrivateRoute from '@/main/routes/private-route'
 
 type SutTypes = {
-  history: any
+  history: MemoryHistory
 }
 
 const makeSut = (account = mockAccountModel()): SutTypes => {

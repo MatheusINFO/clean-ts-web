@@ -1,10 +1,11 @@
 import React from 'react'
+import { RecoilRoot } from 'recoil'
 import { Router } from 'react-router-dom'
 import { render } from '@testing-library/react'
-import { RecoilRoot } from 'recoil'
-import { currentAccountState } from '@/presentation/components'
-import { mockAccountModel } from '@/domain/test'
+
 import { AccountModel } from '@/domain/models'
+import { mockAccountModel } from '@/domain/test'
+import { currentAccountState } from '@/presentation/components'
 
 type SutTypes = {
   setCurrentAccountMock: (account: AccountModel) => void

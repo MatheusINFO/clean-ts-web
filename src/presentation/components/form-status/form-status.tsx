@@ -1,6 +1,7 @@
 import React from 'react'
-import Styles from './form-status-styles.scss'
+
 import { Spinner } from '@/presentation/components'
+import Styles from './form-status-styles.scss'
 
 type Props = {
   state: any

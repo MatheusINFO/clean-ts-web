@@ -1,4 +1,5 @@
 import faker from 'faker'
+
 import { mockAccountModel, mockAddAccount } from '@/domain/test'
 import { UnexpectedError, EmailInUseError } from '@/domain/erros'
 import { HttpClientSpy } from '@/data/test'

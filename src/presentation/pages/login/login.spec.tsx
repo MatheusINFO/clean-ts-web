@@ -1,8 +1,10 @@
 import React from 'react'
-import { createMemoryHistory } from 'history'
 import faker from 'faker'
+import { createMemoryHistory, MemoryHistory } from 'history'
 import { screen, fireEvent, waitFor } from '@testing-library/react'
-import Login from './login'
+
+import { AccountModel } from '@/domain/models'
+import { InvalidCredentialsError } from '@/domain/erros'
 import {
   ValidationStub,
   AuthenticationSpy,
@@ -10,13 +12,12 @@ import {
   populateInputField,
   renderWithHistory,
 } from '@/presentation/test'
-import { InvalidCredentialsError } from '@/domain/erros'
-import { AccountModel } from '@/domain/models'
+import Login from './login'
 
 type SutTypes = {
   authenticationSpy: AuthenticationSpy
   setCurrentAccountMock: (account: AccountModel) => void
-  history: any
+  history: MemoryHistory
 }
 
 type SutParams = {
@@ -158,7 +159,6 @@ describe('LoginComponent', () => {
     expect(setCurrentAccountMock).toHaveBeenCalledWith(
       authenticationSpy.account
     )
-    expect(history.length).toBe(1)
     expect(history.location.pathname).toBe('/')
   })
 
@@ -166,7 +166,6 @@ describe('LoginComponent', () => {
     const { history } = makeSut()
     const signupLink = screen.getByTestId('signup-link')
     fireEvent.click(signupLink)
-    expect(history.length).toBe(1)
     expect(history.location.pathname).toBe('/signup')
   })
 })

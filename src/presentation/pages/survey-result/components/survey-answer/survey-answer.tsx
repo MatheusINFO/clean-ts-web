@@ -1,8 +1,9 @@
 import React from 'react'
 import { useRecoilValue } from 'recoil'
+
 import { SurveyResultAnswerModel } from '@/domain/models'
-import Styles from './survey-answer-styles.scss'
 import { onSurveyAnswerState } from '@/presentation/pages/survey-result/components'
+import Styles from './survey-answer-styles.scss'
 
 type Props = {
   answer: SurveyResultAnswerModel

@@ -1,4 +1,5 @@
 import faker from 'faker'
+
 import { HttpClientSpy } from '@/data/test'
 import { HttpStatusCode } from '@/data/protocols/http'
 import { mockAuthentication, mockAccountModel } from '@/domain/test'

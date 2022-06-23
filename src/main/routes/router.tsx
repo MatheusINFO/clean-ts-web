@@ -6,6 +6,8 @@ import {
   BrowserRouterProps,
 } from 'react-router-dom'
 import { RecoilRoot } from 'recoil'
+
+import { currentAccountState } from '@/presentation/components'
 import {
   getCurrentAccountAdapter,
   setCurrentAccountAdapter,
@@ -17,7 +19,6 @@ import {
   makeSurveyResultFactory,
 } from '@/main/factories/pages'
 import PrivateRoute from './private-route'
-import { currentAccountState } from '@/presentation/components'
 
 type Props = BrowserRouterProps | Readonly<BrowserRouterProps>
 

@@ -1,5 +1,5 @@
-import { LoadSurveyList } from '@/domain/usecases'
 import { SurveyModel } from '@/domain/models'
+import { LoadSurveyList } from '@/domain/usecases'
 import { mockSurveyListModel } from '@/domain/test'
 
 export class LoadSurveyListSpy implements LoadSurveyList {

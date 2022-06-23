@@ -1,15 +1,16 @@
 import React from 'react'
-import { createMemoryHistory } from 'history'
+import { createMemoryHistory, MemoryHistory } from 'history'
 import { fireEvent, screen, waitFor } from '@testing-library/react'
+
+import { AccountModel } from '@/domain/models'
 import { AccessDeniedError, UnexpectedError } from '@/domain/erros'
 import { LoadSurveyListSpy, renderWithHistory } from '@/presentation/test'
 import SurveyList from './survey-list'
-import { AccountModel } from '@/domain/models'
 
 type SutTypes = {
   loadSurveyListSpy: LoadSurveyListSpy
   setCurrentAccountMock: (account: AccountModel) => void
-  history: any
+  history: MemoryHistory
 }
 
 const makeSut = (loadSurveyListSpy = new LoadSurveyListSpy()): SutTypes => {

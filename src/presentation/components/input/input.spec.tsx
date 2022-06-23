@@ -1,6 +1,7 @@
 import React from 'react'
 import faker from 'faker'
 import { fireEvent, render, RenderResult } from '@testing-library/react'
+
 import Input from './input'
 
 let field: string = faker.database.column()

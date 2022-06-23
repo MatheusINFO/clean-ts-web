@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
-import { LoadSurveyList } from '@/domain/usecases'
-import { Footer, SignedHeader, Error } from '@/presentation/components'
-import { SurveyListItem, surveyListState } from './components'
-import Styles from './survey-list-styles.scss'
-import { useErrorHandler } from '@/presentation/hooks'
 import { useRecoilState } from 'recoil'
+
+import { LoadSurveyList } from '@/domain/usecases'
+import { useErrorHandler } from '@/presentation/hooks'
+import { Footer, SignedHeader, Error } from '@/presentation/components'
+import Styles from './survey-list-styles.scss'
+import { SurveyListItem, surveyListState } from './components'
 
 type Props = {
   loadSurveyList: LoadSurveyList

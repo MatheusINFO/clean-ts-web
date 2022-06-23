@@ -1,4 +1,5 @@
 import faker from 'faker'
+
 import { mockAccountModel } from '@/domain/test'
 import { GetStorageSpy, HttpClientSpy, mockHttpRequest } from '@/data/test'
 import { AuthorizeHttpClientDecorator } from './authorize-http-client-decorator'

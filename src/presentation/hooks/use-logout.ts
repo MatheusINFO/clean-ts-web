@@ -1,5 +1,6 @@
 import { useRecoilValue } from 'recoil'
 import { useHistory } from 'react-router-dom'
+
 import { currentAccountState } from '@/presentation/components'
 
 type CallBackType = () => void

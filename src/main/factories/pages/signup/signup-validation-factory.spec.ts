@@ -1,4 +1,3 @@
-import { makeSignUpValidationFactory } from './signup-validation-factory'
 import {
   CompareFieldsValidation,
   EmailValidation,
@@ -6,6 +5,7 @@ import {
   RequiredFieldValidation,
   ValidationComposite,
 } from '@/validation/validators'
+import { makeSignUpValidationFactory } from './signup-validation-factory'
 
 describe('SignUpValidationFactory', () => {
   it('Should make ValidationComposite with correct validations', () => {

@@ -1,6 +1,7 @@
 import faker from 'faker'
-import { ValidationComposite } from './validation-composite'
+
 import { FieldValidationSpy } from '@/validation/test'
+import { ValidationComposite } from './validation-composite'
 
 let field: string = faker.random.word()
 

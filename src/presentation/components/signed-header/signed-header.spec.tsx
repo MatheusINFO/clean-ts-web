@@ -1,14 +1,15 @@
 import React from 'react'
 import { fireEvent, screen } from '@testing-library/react'
-import { createMemoryHistory } from 'history'
-import SignedHeader from './signed-header'
-import { mockAccountModel } from '@/domain/test'
+import { createMemoryHistory, MemoryHistory } from 'history'
+
 import { AccountModel } from '@/domain/models'
+import { mockAccountModel } from '@/domain/test'
 import { renderWithHistory } from '@/presentation/test'
+import SignedHeader from './signed-header'
 
 type SutTypes = {
   setCurrentAccountMock: (account: AccountModel) => void
-  history: any
+  history: MemoryHistory
 }
 
 const makeSut = (account = mockAccountModel()): SutTypes => {

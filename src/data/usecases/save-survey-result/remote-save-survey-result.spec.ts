@@ -1,10 +1,11 @@
 import faker from 'faker'
-import { mockSaveSurveyResultParams } from '@/domain/test'
+
 import { SaveSurveyResult } from '@/domain/usecases'
+import { mockSaveSurveyResultParams } from '@/domain/test'
+import { AccessDeniedError, UnexpectedError } from '@/domain/erros'
 import { HttpStatusCode } from '@/data/protocols/http'
 import { HttpClientSpy, mockRemoteSurveyResultModel } from '@/data/test'
 import { RemoteSaveSurveyResult } from './remote-save-survey-result'
-import { AccessDeniedError, UnexpectedError } from '@/domain/erros'
 
 type SutTypes = {
   sut: RemoteSaveSurveyResult

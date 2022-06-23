@@ -1,4 +1,5 @@
 import React from 'react'
+
 import Spinner from '@/presentation/components/spinner/spinner'
 import Styles from './loading-styles.scss'
 

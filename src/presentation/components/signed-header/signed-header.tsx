@@ -1,8 +1,9 @@
 import React, { memo } from 'react'
+import { useRecoilValue } from 'recoil'
+
+import { useLogout } from '@/presentation/hooks'
 import { currentAccountState, Logo } from '@/presentation/components'
 import Styles from './signed-header-styles.scss'
-import { useLogout } from '@/presentation/hooks'
-import { useRecoilValue } from 'recoil'
 
 const SignedHeader: React.FC = () => {
   const logout = useLogout()

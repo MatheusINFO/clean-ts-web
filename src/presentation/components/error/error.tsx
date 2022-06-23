@@ -1,4 +1,5 @@
 import React from 'react'
+
 import Styles from './error-styles.scss'
 
 type Props = {
