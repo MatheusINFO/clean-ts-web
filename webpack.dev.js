@@ -1,6 +1,6 @@
 const { DefinePlugin } = require('webpack')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
-const merge = require('webpack-merge')
+const { merge } = require('webpack-merge')
 const common = require('./webpack.common')
 
 module.exports = merge(common, {
@@ -33,9 +33,11 @@ module.exports = merge(common, {
   },
   devtool: 'inline-source-map',
   devServer: {
-    contentBase: './public',
-    writeToDisk: true,
+    static: './public',
     historyApiFallback: true,
+    devMiddleware: {
+      writeToDisk: true,
+    },
     port: 8080,
   },
   plugins: [
