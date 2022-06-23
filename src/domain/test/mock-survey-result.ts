@@ -12,14 +12,14 @@ export const mockSurveyResultModel = (): LoadSurveyResult.Result => ({
     {
       answer: faker.random.words(2),
       image: faker.image.imageUrl(),
-      count: faker.random.number(),
-      percent: faker.random.number(),
+      count: faker.datatype.number(),
+      percent: faker.datatype.number(),
       isCurrentAccountAnswer: true,
     },
     {
       answer: faker.random.words(4),
-      count: faker.random.number(),
-      percent: faker.random.number(),
+      count: faker.datatype.number(),
+      percent: faker.datatype.number(),
       isCurrentAccountAnswer: false,
     },
   ],

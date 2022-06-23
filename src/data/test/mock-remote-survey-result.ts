@@ -8,10 +8,10 @@ export const mockRemoteSurveyResultModel =
     answers: [
       {
         answer: faker.random.words(),
-        count: faker.random.number(),
-        percent: faker.random.number(),
+        count: faker.datatype.number(),
+        percent: faker.datatype.number(),
         image: faker.image.imageUrl(),
-        isCurrentAccountAnswer: faker.random.boolean(),
+        isCurrentAccountAnswer: faker.datatype.boolean(),
       },
     ],
   })
