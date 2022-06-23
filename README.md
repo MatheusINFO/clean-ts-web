@@ -1,4 +1,3 @@
-[![Build Status](https://app.travis-ci.com/matheusinfo/clean-ts-web.svg?branch=master)](https://app.travis-ci.com/matheusinfo/clean-ts-web)
 [![Coverage Status](https://coveralls.io/repos/github/matheusinfo/clean-ts-web/badge.svg?branch=master)](https://coveralls.io/github/matheusinfo/clean-ts-web?branch=master)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
 [![Known Vulnerabilities](https://snyk.io/test/github/matheusinfo/clean-ts-web/badge.svg)]
