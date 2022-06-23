@@ -5,3 +5,4 @@ public
 src/**/*.scss
 *.json
 dist
+cypress.config.ts
